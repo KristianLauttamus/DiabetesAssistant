@@ -5,10 +5,9 @@
  */
 package com.lauttadev.diabetesassistant.models;
 
-import com.lauttadev.diabetesassistant.interfaces.JSONCreatable;
 import java.util.Date;
 
-public class BloodSugar implements JSONCreatable {
+public class BloodSugar {
     private double value;
     private String textValue = null;
     private Date measuredAt;
@@ -58,10 +57,5 @@ public class BloodSugar implements JSONCreatable {
             return this.textValue;
         
         return "" + this.value;
-    }
-    
-    @Override
-    public BloodSugar createFromJSON(){ // TODO
-        return null;
     }
 }

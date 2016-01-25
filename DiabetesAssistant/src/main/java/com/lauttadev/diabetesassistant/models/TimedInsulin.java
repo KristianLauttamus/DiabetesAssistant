@@ -6,10 +6,9 @@
 
 package com.lauttadev.diabetesassistant.models;
 
-import com.lauttadev.diabetesassistant.interfaces.JSONCreatable;
 import java.util.Calendar;
 
-public class TimedInsulin implements JSONCreatable {
+public class TimedInsulin {
     private Calendar tookAt;
     private Calendar shouldAt;
     private Insulin insulin;
@@ -35,10 +34,5 @@ public class TimedInsulin implements JSONCreatable {
             return false;
         
         return this.shouldAt.get(Calendar.DAY_OF_YEAR) == this.tookAt.get(Calendar.DAY_OF_YEAR);
-    }
-
-    @Override
-    public JSONCreatable createFromJSON() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
