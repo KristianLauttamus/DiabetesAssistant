@@ -8,3 +8,7 @@ Ohjelma esittää myös statistiikkoja mm. keskiarvoja ja arvojen ääripäitä.
 * verensokerimittauksen arvon ja ajankohdan tallentaminen
   * pistettävän insuliinimäärän lisääminen
 * 
+
+##Luokkakaavio
+![Luokkakaavio](http://yuml.me/75e95e8c)
+[Muokkaa](http://yuml.me/edit/75e95e8c)
