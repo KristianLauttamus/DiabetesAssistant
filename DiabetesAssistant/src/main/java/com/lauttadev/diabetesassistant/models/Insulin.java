@@ -16,4 +16,12 @@ public class Insulin {
     public Insulin(int amount){
         this.amount = amount;
     }
+    
+    public void take(){
+        taken = true;
+    }
+    
+    public boolean isTaken(){
+        return taken;
+    }
 }

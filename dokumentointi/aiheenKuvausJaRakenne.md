@@ -10,5 +10,5 @@ Ohjelma esittää myös statistiikkoja mm. keskiarvoja ja arvojen ääripäitä.
 * 
 
 ##Luokkakaavio
-![Luokkakaavio](http://yuml.me/75e95e8c)
-[Muokkaa](http://yuml.me/edit/75e95e8c)
+![Luokkakaavio](http://yuml.me/37c0dd68)
+[Muokkaa](http://yuml.me/edit/37c0dd68)

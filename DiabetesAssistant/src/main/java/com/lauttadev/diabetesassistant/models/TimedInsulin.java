@@ -15,6 +15,7 @@ public class TimedInsulin {
     
     public TimedInsulin(Calendar shouldAt, Insulin insulin){
         this.shouldAt = shouldAt;
+        this.shouldAt.set(Calendar.DAY_OF_YEAR, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
         this.insulin = insulin;
     }
     
@@ -22,7 +23,7 @@ public class TimedInsulin {
      * Take Insulin
      */
     public void take(){
-        this.shouldAt = Calendar.getInstance();
+        this.tookAt = Calendar.getInstance();
     }
     
     /**
