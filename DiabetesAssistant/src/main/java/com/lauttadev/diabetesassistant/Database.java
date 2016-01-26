@@ -29,6 +29,11 @@ public class Database {
         this.gson = new Gson();
     }
     
+    /**
+     * Check if file and file path exists
+     * @param file_name
+     * @return boolean
+     */
     private boolean fileExists(String file_name){
         File saveDir = new File(this.FILE_LOCATION);
         File saveFileDir = new File(this.getSavePath(file_name));
@@ -36,9 +41,14 @@ public class Database {
         return saveDir.exists() && saveFileDir.exists();
     }
     
+    /**
+     * Create files if files are not yet created
+     */
     private void createFiles(){
-        File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
+        // BloodSugars
         if(this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
+            File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
+            
             try {
                 bloodSugarsFile.createNewFile();
             } catch (IOException e) {
