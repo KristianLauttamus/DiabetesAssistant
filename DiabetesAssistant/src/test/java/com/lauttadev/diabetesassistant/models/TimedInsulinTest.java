@@ -1,5 +1,5 @@
-import com.lauttadev.diabetesassistant.models.Insulin;
-import com.lauttadev.diabetesassistant.models.TimedInsulin;
+package com.lauttadev.diabetesassistant.models;
+
 import java.util.Calendar;
 import org.junit.Test;
 import static org.junit.Assert.*;

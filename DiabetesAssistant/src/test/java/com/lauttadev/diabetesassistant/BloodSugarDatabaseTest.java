@@ -1,3 +1,5 @@
+package com.lauttadev.diabetesassistant;
+
 import com.lauttadev.diabetesassistant.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;

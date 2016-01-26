@@ -1,7 +1,6 @@
-import com.lauttadev.diabetesassistant.Database;
+package com.lauttadev.diabetesassistant;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 

@@ -1,5 +1,5 @@
-import com.lauttadev.diabetesassistant.models.BloodSugar;
-import com.lauttadev.diabetesassistant.models.Insulin;
+package com.lauttadev.diabetesassistant.models;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
