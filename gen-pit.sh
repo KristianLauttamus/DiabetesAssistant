@@ -16,5 +16,5 @@ cp -R * ../../../../dokumentointi/pit/
 if ! [ -z "$1" ]
   then
     cd ../../../../
-    git add --all; git commit -a -m "PIT päivitetty"; git push;
+    git add --all; git commit -a -m "PIT updated"; git push;
 fi
