@@ -7,13 +7,11 @@
 package com.lauttadev.diabetesassistant;
 
 import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.Insulin;
 
 public class Main {
     public static void main(String[] args) {
-        BloodSugar bloodsugar = new BloodSugar("HI");
         Database db = new Database();
-        
-        db.addBloodSugar(bloodsugar);
         db.getBloodSugarsFromFile();
     }
 }

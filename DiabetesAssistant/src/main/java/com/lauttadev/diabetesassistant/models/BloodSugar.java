@@ -11,40 +11,34 @@ public class BloodSugar {
     private double value;
     private String textValue = null;
     private Date measuredAt;
-    private Insulin insulin;
+    private String insulinName;
+    private int insulinAmount;
+    private boolean insulinTaken = false;
     
+    // Constructors without Insulin
     public BloodSugar(double value){
         this.value = value;
         this.measuredAt = new Date();
     }
-    
     public BloodSugar(String text_value){
         this.textValue = text_value;
         this.measuredAt = new Date();
     }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
+    
+    // Constructors with Insulin
+    public BloodSugar(double value, Insulin insulin, int amount, boolean taken){
+        this.insulinTaken = false;
         this.value = value;
+        this.measuredAt = new Date();
+        this.insulinName = insulin.getName();
+        this.insulinAmount = amount;
     }
-
-    public String getTextValue() {
-        return textValue;
-    }
-
-    public void setTextValue(String text_value) {
+    public BloodSugar(String text_value, Insulin insulin, int amount, boolean taken){
+        this.insulinTaken = false;
         this.textValue = text_value;
-    }
-
-    public Date getMeasuredAt() {
-        return measuredAt;
-    }
-
-    public void setMeasuredAt(Date measuredAt) {
-        this.measuredAt = measuredAt;
+        this.measuredAt = new Date();
+        this.insulinName = insulin.getName();
+        this.insulinAmount = amount;
     }
     
     /**
@@ -58,4 +52,56 @@ public class BloodSugar {
         
         return "" + this.value;
     }
+    
+    /**
+     * Take insulin
+     */
+    public void takeInsulin(){
+        this.insulinTaken = true;
+    }
+    
+    /**
+     * See if insulin is taken
+     * @return boolean
+     */
+    public boolean isInsulinTaken(){
+        return this.insulinTaken;
+    }
+
+    public double getValue() {
+        return value;
+    }
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public String getTextValue() {
+        return textValue;
+    }
+    public void setTextValue(String text_value) {
+        this.textValue = text_value;
+    }
+
+    public Date getMeasuredAt() {
+        return measuredAt;
+    }
+    public void setMeasuredAt(Date measuredAt) {
+        this.measuredAt = measuredAt;
+    }
+
+    public String getInsulinName() {
+        return insulinName;
+    }
+    public void setInsulinName(Insulin insulin) {
+        this.insulinName = insulin.getName();
+    }
+
+    public int getInsulinAmount() {
+        return insulinAmount;
+    }
+    public void setInsulinAmount(int insulinAmount) {
+        this.insulinAmount = insulinAmount;
+    }
+
+    
 }

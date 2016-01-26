@@ -10,18 +10,23 @@ import java.util.Date;
 
 public class Insulin {
     private double perCarbohydrate;
-    private int amount;
-    private boolean taken = false;
+    private String name;
     
-    public Insulin(int amount){
-        this.amount = amount;
+    public Insulin(String name){
+        this.name = name;
+    }
+
+    public double getPerCarbohydrate() {
+        return perCarbohydrate;
+    }
+    public void setPerCarbohydrate(double perCarbohydrate) {
+        this.perCarbohydrate = perCarbohydrate;
     }
     
-    public void take(){
-        taken = true;
+    public String getName() {
+        return name;
     }
-    
-    public boolean isTaken(){
-        return taken;
+    public void setName(String name) {
+        this.name = name;
     }
 }

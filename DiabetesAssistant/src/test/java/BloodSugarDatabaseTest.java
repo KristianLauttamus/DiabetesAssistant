@@ -6,6 +6,7 @@
 
 import com.lauttadev.diabetesassistant.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.Insulin;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
  * @author krislaut
  */
 public class BloodSugarDatabaseTest {
-    private Database db = new Database();
+    private final Database db = new Database();
     
     public BloodSugarDatabaseTest() {
     }
@@ -80,5 +81,14 @@ public class BloodSugarDatabaseTest {
         ArrayList<BloodSugar> bloodsugars = this.db.getBloodSugars();
         
         assertEquals(this.db.getBloodSugars().get(1).getBloodSugar(), "LO");
+    }
+    
+    @Test
+    public void bloodsugar_comes_with_insulin(){
+        BloodSugar bsWithInsulin = new BloodSugar("HI", new Insulin("Novorapid"), 10, true);
+        
+        this.db.addBloodSugar(bsWithInsulin);
+        
+        assertEquals("Novorapid", this.db.getBloodSugarsFromFile().get(0).getInsulinName());
     }
 }

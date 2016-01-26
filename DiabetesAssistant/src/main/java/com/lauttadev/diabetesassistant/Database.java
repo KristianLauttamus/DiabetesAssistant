@@ -9,6 +9,7 @@ package com.lauttadev.diabetesassistant;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.Insulin;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -21,9 +22,11 @@ import java.util.logging.Logger;
 public class Database {
     private final String FILE_LOCATION = System.getProperty("user.home");
     private final String BLOODSUGARS_FILE_NAME = "bloodsugarsGSON.json";
+    private final String INSULINS_FILE_NAME = "insulinsGSON.json";
     
-    private ArrayList<BloodSugar> bloodsugars = new ArrayList<BloodSugar>();
-    private Gson gson;
+    private ArrayList<BloodSugar> bloodsugars = new ArrayList<>();
+    private ArrayList<Insulin> insulins = new ArrayList<>();
+    private final Gson gson;
     
     public Database(){
         this.gson = new Gson();
@@ -44,7 +47,7 @@ public class Database {
     /**
      * Create files if files are not yet created
      */
-    private void createFiles(){
+    public void createFiles(){
         // BloodSugars
         if(this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
             File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
@@ -54,12 +57,27 @@ public class Database {
             } catch (IOException e) {
                 System.out.println(e.getStackTrace());
             }
+        }
+        
+        // Insulins
+        if(this.fileExists(this.INSULINS_FILE_NAME)) {
+            File insulinsFile = new File(this.getSavePath(this.INSULINS_FILE_NAME));
+            
+            try {
+                insulinsFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println(e.getStackTrace());
+            }
         } 
     }
     
     private String getSavePath(String fileName){
         return this.FILE_LOCATION + "/" + this.BLOODSUGARS_FILE_NAME;
     }
+    
+    /**
+     * BloodSugars
+     */
     
     /**
      * Get BloodSugars from the file and save to bloodsugars variable
@@ -97,6 +115,10 @@ public class Database {
         return this.bloodsugars;
     }
     
+    /**
+     * Add new BloodSugar
+     * @param bloodsugar 
+     */
     public void addBloodSugar(BloodSugar bloodsugar){        
         this.bloodsugars.add(bloodsugar);
         this.saveBloodSugars();
@@ -136,6 +158,94 @@ public class Database {
             writer.close();
             
             this.bloodsugars = new ArrayList<BloodSugar>();
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }
+    }
+    
+    /**
+     * Insulins
+     */
+    
+    /**
+     * Get Insulins from the file and save to insulins variable
+     * @return ArrayList
+     */
+    public ArrayList<Insulin> getInsulinsFromFile(){
+        if(!this.fileExists(this.INSULINS_FILE_NAME)){
+            return this.insulins;
+        }
+        
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(this.getSavePath(this.INSULINS_FILE_NAME)));
+
+            //convert the json string back to object  
+            this.insulins = gson.fromJson(reader, new TypeToken<ArrayList<Insulin>>(){}.getType());  
+            
+            if(this.insulins == null){
+                this.insulins = new ArrayList<Insulin>();
+            }
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }
+        
+        return this.insulins;
+    }
+    
+    /**
+     * Check if insulins are available and return them, if not then just get them from file and return
+     * @return 
+     */
+    public ArrayList<Insulin> getInsulins(){
+        if(this.insulins.size() == 0)
+            return this.getInsulinsFromFile();
+        
+        return this.insulins;
+    }
+    
+    /**
+     * Add new Insulin
+     * @param insulin 
+     */
+    public void addInsulin(Insulin insulin){        
+        this.insulins.add(insulin);
+        this.saveInsulins();
+    }
+    
+    /**
+     * Save Insulins to file
+     */
+    public void saveInsulins(){
+        String insulinsJSON = gson.toJson(this.insulins);
+        
+        try {    
+            FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME));  
+            writer.write(insulinsJSON);  
+            writer.close();
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }
+    }
+    
+    /**
+     * Delete single Insulin
+     */
+    public void deleteInsulin(int index){
+        this.insulins.remove(index);
+        
+        this.saveInsulins();
+    }
+    
+    /**
+     * Delete all Insulins
+     */
+    public void deleteInsulins(){        
+        try {    
+            FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME));  
+            writer.write("");  
+            writer.close();
+            
+            this.insulins = new ArrayList<Insulin>();
         } catch (IOException e) {  
             e.printStackTrace();  
         }

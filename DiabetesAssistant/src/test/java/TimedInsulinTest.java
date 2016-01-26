@@ -5,6 +5,8 @@
  */
 
 import com.lauttadev.diabetesassistant.models.Insulin;
+import com.lauttadev.diabetesassistant.models.TimedInsulin;
+import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,10 +40,12 @@ public class TimedInsulinTest {
     }
     
     @Test
-    public void test_taking_insulin(){
-        Insulin insulin = new Insulin(10);
-        insulin.take();
+    public void test_taking_timed_insulin(){
+        Insulin insulin = new Insulin("Novorapid");
+        TimedInsulin timed = new TimedInsulin(Calendar.getInstance(), insulin);
         
-        assertTrue(insulin.isTaken());
+        timed.take();
+        
+        assertTrue(timed.isTaken());
     }
 }
