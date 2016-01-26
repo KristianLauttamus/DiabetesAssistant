@@ -1,40 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import com.lauttadev.diabetesassistant.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
 import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author krislaut
- */
 public class BloodSugarDatabaseTest {
     private final Database db = new Database();
-    
-    public BloodSugarDatabaseTest() {
-    }
     
     @After
     public void tearDown() {
         this.db.deleteBloodSugars();
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     
     @Test
     public void saving_bloodsugar_types(){

@@ -47,27 +47,19 @@ public class Database {
     /**
      * Create files if files are not yet created
      */
-    public void createFiles(){
+    public void createFiles() throws IOException {
         // BloodSugars
         if(this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
             File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
             
-            try {
-                bloodSugarsFile.createNewFile();
-            } catch (IOException e) {
-                System.out.println(e.getStackTrace());
-            }
+            bloodSugarsFile.createNewFile();
         }
         
         // Insulins
         if(this.fileExists(this.INSULINS_FILE_NAME)) {
             File insulinsFile = new File(this.getSavePath(this.INSULINS_FILE_NAME));
             
-            try {
-                insulinsFile.createNewFile();
-            } catch (IOException e) {
-                System.out.println(e.getStackTrace());
-            }
+            insulinsFile.createNewFile();
         } 
     }
     

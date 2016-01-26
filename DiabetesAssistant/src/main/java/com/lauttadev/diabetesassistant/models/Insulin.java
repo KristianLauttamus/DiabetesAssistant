@@ -15,6 +15,22 @@ public class Insulin {
     public Insulin(String name){
         this.name = name;
     }
+    
+    public int calculateAmount(int carbohydrates){
+        return new Double(this.perCarbohydrate * carbohydrates).intValue();
+    }
+    public int calculateAmount(int carbohydrates, BloodSugar bloodSugar){
+        if(bloodSugar.getTextValue() == null || bloodSugar.getTextValue().isEmpty()){
+            return new Double(bloodSugar.getValue()/10).intValue() +
+                    new Double(this.perCarbohydrate * carbohydrates).intValue();
+        } else if (bloodSugar.getBloodSugar().equals("HI")){
+            return 20 + new Double(this.perCarbohydrate * carbohydrates).intValue();
+        } else if (bloodSugar.getBloodSugar().equals("LO")){
+            return 0;
+        } else {
+            return new Double(this.perCarbohydrate * carbohydrates).intValue();
+        }
+    }
 
     public double getPerCarbohydrate() {
         return perCarbohydrate;
