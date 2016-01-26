@@ -12,3 +12,9 @@ rm -rfv ../dokumentointi/pit/*
 echo "Copy new PIT -reports..."
 cd target/pit-reports/*
 cp -R * ../../../../dokumentointi/pit/
+
+if ! [ -z "$1" ]
+  then
+    cd ../../../../
+    git add --all; git commit -a -m "PIT päivitetty"; git push;
+fi
