@@ -15,12 +15,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Database {
     private final String FILE_LOCATION = System.getProperty("user.home");
     private final String BLOODSUGARS_FILE_NAME = "bloodsugarsGSON.json";
     
-    private ArrayList<BloodSugar> bloodsugars = null;
+    private ArrayList<BloodSugar> bloodsugars = new ArrayList<BloodSugar>();
     private Gson gson;
     
     public Database(){
@@ -34,6 +36,17 @@ public class Database {
         return saveDir.exists() && saveFileDir.exists();
     }
     
+    private void createFiles(){
+        File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
+        if(this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
+            try {
+                bloodSugarsFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println(e.getStackTrace());
+            }
+        } 
+    }
+    
     private String getSavePath(String fileName){
         return this.FILE_LOCATION + "/" + this.BLOODSUGARS_FILE_NAME;
     }
@@ -44,10 +57,6 @@ public class Database {
      */
     public ArrayList<BloodSugar> getBloodSugarsFromFile(){
         if(!this.fileExists(this.BLOODSUGARS_FILE_NAME)){
-            if(this.bloodsugars == null){
-                this.bloodsugars = new ArrayList<BloodSugar>();
-            }
-            
             return this.bloodsugars;
         }
         
@@ -72,16 +81,13 @@ public class Database {
      * @return 
      */
     public ArrayList<BloodSugar> getBloodSugars(){
-        if(this.bloodsugars == null)
+        if(this.bloodsugars.size() == 0)
             return this.getBloodSugarsFromFile();
         
         return this.bloodsugars;
     }
     
-    public void addBloodSugar(BloodSugar bloodsugar){
-        if(this.bloodsugars == null)
-            this.getBloodSugarsFromFile();
-        
+    public void addBloodSugar(BloodSugar bloodsugar){        
         this.bloodsugars.add(bloodsugar);
         this.saveBloodSugars();
     }
@@ -96,6 +102,30 @@ public class Database {
             FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME));  
             writer.write(bloodSugarsJSON);  
             writer.close();
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }
+    }
+    
+    /**
+     * Delete single BloodSugar
+     */
+    public void deleteBloodSugar(int index){
+        this.bloodsugars.remove(index);
+        
+        this.saveBloodSugars();
+    }
+    
+    /**
+     * Delete all BloodSugars
+     */
+    public void deleteBloodSugars(){        
+        try {    
+            FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME));  
+            writer.write("");  
+            writer.close();
+            
+            this.bloodsugars = new ArrayList<BloodSugar>();
         } catch (IOException e) {  
             e.printStackTrace();  
         }
