@@ -41,6 +41,16 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.1.8</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.lauttadev.diabetesassistant.Database</param>
+                        <param>com.lauttadev.diabetesassistant.models.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.lauttadev.diabetesassistant.Database</param>
+                        <param>com.lauttadev.diabetesassistant.models.*</param>
+                    </targetTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>
