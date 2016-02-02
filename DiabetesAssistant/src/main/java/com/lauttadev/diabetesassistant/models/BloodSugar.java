@@ -21,7 +21,12 @@ public class BloodSugar {
         this.measuredAt = new Date();
     }
     public BloodSugar(String text_value){
-        this.textValue = text_value;
+        if(!text_value.equals("HI") && !text_value.equals("LO")){
+            this.value = Double.valueOf(text_value);
+        } else {
+            this.textValue = text_value;
+        }
+        
         this.measuredAt = new Date();
     }
     

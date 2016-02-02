@@ -5,26 +5,51 @@
  */
 package com.lauttadev.diabetesassistant.gui;
 
+import com.lauttadev.diabetesassistant.Database;
+import com.lauttadev.diabetesassistant.models.BloodSugar;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.Timer;
 
 /**
  *
  * @author krislaut
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    private Database db;
+    
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainFrame(Database db) {
+        this.db = db;
+        
         initComponents();
+        
+        Timer t = new Timer(1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+                
+                Date today = Calendar.getInstance().getTime();
+                
+                timestamp.setText(df.format(today));
+            }
+        });
+        t.start();
     }
 
     /**
@@ -37,6 +62,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         MainFrameTitle = new javax.swing.JLabel();
+        add_bloodsugar = new javax.swing.JButton();
+        bloodsugar = new javax.swing.JTextField();
+        timestamp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(500, 400));
@@ -49,22 +77,51 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        add_bloodsugar.setText("Lisää verensokeri");
+        add_bloodsugar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                add_bloodsugarMouseClicked(evt);
+            }
+        });
+
+        bloodsugar.setText("Verensokeri");
+
+        timestamp.setText("Timestamp");
+        timestamp.setName("timestamp"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainFrameTitle)
-                .addContainerGap(389, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MainFrameTitle)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(timestamp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_bloodsugar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(MainFrameTitle)
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add_bloodsugar)
+                    .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timestamp))
+                .addContainerGap())
         );
+
+        timestamp.getAccessibleContext().setAccessibleName("timeDisplay");
+        timestamp.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -73,42 +130,19 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MainFrameTitleComponentShown
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
-        });
+    private void add_bloodsugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_bloodsugarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_bloodsugarMouseClicked
+    
+    private void addBloodSugar(){
+        BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
+        db.addBloodSugar(bloodSugar);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainFrameTitle;
+    private javax.swing.JButton add_bloodsugar;
+    private javax.swing.JTextField bloodsugar;
+    private javax.swing.JLabel timestamp;
     // End of variables declaration//GEN-END:variables
 }

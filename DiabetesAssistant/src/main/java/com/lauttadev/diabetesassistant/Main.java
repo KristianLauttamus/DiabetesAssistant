@@ -6,12 +6,13 @@
 
 package com.lauttadev.diabetesassistant;
 
-import com.lauttadev.diabetesassistant.models.BloodSugar;
-import com.lauttadev.diabetesassistant.models.Insulin;
+import com.lauttadev.diabetesassistant.gui.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
         Database db = new Database();
-        db.getBloodSugarsFromFile();
+        
+        MainFrame mainFrame = new MainFrame(db);
+        mainFrame.setVisible(true);
     }
 }
