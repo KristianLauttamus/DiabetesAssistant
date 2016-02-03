@@ -7,6 +7,7 @@ package com.lauttadev.diabetesassistant.gui;
 
 import com.lauttadev.diabetesassistant.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.BloodSugarsList;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -61,21 +62,19 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        MainFrameTitle = new javax.swing.JLabel();
         add_bloodsugar = new javax.swing.JButton();
         bloodsugar = new javax.swing.JTextField();
         timestamp = new javax.swing.JLabel();
+        insulin_notify_label = new javax.swing.JLabel();
+        insulin_notify_label1 = new javax.swing.JLabel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        timed_insulins_list = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        recent_bloodsugars_list = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(500, 400));
-
-        MainFrameTitle.setFont(new java.awt.Font("Ubuntu Light", 0, 15)); // NOI18N
-        MainFrameTitle.setText("Diabetes Assistant");
-        MainFrameTitle.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                MainFrameTitleComponentShown(evt);
-            }
-        });
 
         add_bloodsugar.setText("Lisää verensokeri");
         add_bloodsugar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -89,6 +88,31 @@ public class MainFrame extends javax.swing.JFrame {
         timestamp.setText("Timestamp");
         timestamp.setName("timestamp"); // NOI18N
 
+        insulin_notify_label.setText("Muistettavat insuliinit");
+
+        insulin_notify_label1.setText("Viimeisimmät verensokerimittaukset");
+
+        jSplitPane1.setDividerLocation(170);
+        jSplitPane1.setDividerSize(2);
+
+        timed_insulins_list.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(timed_insulins_list);
+
+        jSplitPane1.setLeftComponent(jScrollPane2);
+
+        recent_bloodsugars_list.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(recent_bloodsugars_list);
+
+        jSplitPane1.setRightComponent(jScrollPane4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,12 +120,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSplitPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(MainFrameTitle)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(insulin_notify_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(insulin_notify_label1))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(timestamp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(add_bloodsugar)))
@@ -111,8 +137,12 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainFrameTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(insulin_notify_label)
+                    .addComponent(insulin_notify_label1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add_bloodsugar)
                     .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,10 +156,6 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MainFrameTitleComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_MainFrameTitleComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MainFrameTitleComponentShown
-
     private void add_bloodsugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_bloodsugarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_add_bloodsugarMouseClicked
@@ -140,9 +166,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel MainFrameTitle;
     private javax.swing.JButton add_bloodsugar;
     private javax.swing.JTextField bloodsugar;
+    private javax.swing.JLabel insulin_notify_label;
+    private javax.swing.JLabel insulin_notify_label1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JList recent_bloodsugars_list;
+    private javax.swing.JList timed_insulins_list;
     private javax.swing.JLabel timestamp;
     // End of variables declaration//GEN-END:variables
 }

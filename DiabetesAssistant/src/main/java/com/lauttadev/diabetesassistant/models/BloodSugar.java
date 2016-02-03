@@ -106,7 +106,5 @@ public class BloodSugar {
     }
     public void setInsulinAmount(int insulinAmount) {
         this.insulinAmount = insulinAmount;
-    }
-
-    
+    }    
 }

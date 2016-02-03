@@ -13,6 +13,7 @@ public class Main {
         Database db = new Database();
         
         MainFrame mainFrame = new MainFrame(db);
+        mainFrame.setTitle("Diabetes Assistant");
         mainFrame.setVisible(true);
     }
 }
