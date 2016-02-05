@@ -51,6 +51,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         t.start();
+        bloodsugar_warning_label.setVisible(false);
     }
 
     /**
@@ -72,9 +73,12 @@ public class MainFrame extends javax.swing.JFrame {
         timed_insulins_list = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         recent_bloodsugars_list = new javax.swing.JList();
+        bloodsugar_warning_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setTitle("Diabetes Assistant");
+        setPreferredSize(new java.awt.Dimension(500, 275));
+        setResizable(false);
 
         add_bloodsugar.setText("Lisää verensokeri");
         add_bloodsugar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,6 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         bloodsugar.setText("Verensokeri");
+        bloodsugar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                bloodsugarKeyTyped(evt);
+            }
+        });
 
         timestamp.setText("Timestamp");
         timestamp.setName("timestamp"); // NOI18N
@@ -113,6 +122,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jSplitPane1.setRightComponent(jScrollPane4);
 
+        bloodsugar_warning_label.setForeground(new java.awt.Color(255, 0, 0));
+        bloodsugar_warning_label.setText("Sallitut syötteet ovat HI, LO, XX.XX");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,12 +137,17 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(insulin_notify_label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(insulin_notify_label1))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(timestamp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(add_bloodsugar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(add_bloodsugar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(bloodsugar_warning_label)
+                                .addGap(70, 70, 70)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -141,13 +158,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(insulin_notify_label)
                     .addComponent(insulin_notify_label1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add_bloodsugar)
                     .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_bloodsugar)
                     .addComponent(timestamp))
-                .addContainerGap())
+                .addGap(2, 2, 2)
+                .addComponent(bloodsugar_warning_label)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         timestamp.getAccessibleContext().setAccessibleName("timeDisplay");
@@ -159,6 +178,16 @@ public class MainFrame extends javax.swing.JFrame {
     private void add_bloodsugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_bloodsugarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_add_bloodsugarMouseClicked
+
+    private void bloodsugarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bloodsugarKeyTyped
+        if("HI".contains(bloodsugar.getText()) || "LO".contains(bloodsugar.getText()) || bloodsugar.getText().matches("/^[0-9]+(\\\\.[0-9]+)?$")){
+            bloodsugar_warning_label.setVisible(false);
+            this.setSize(this.getSize().width, 275);
+        } else if(!bloodsugar_warning_label.isVisible()) {
+            bloodsugar_warning_label.setVisible(true);
+            this.setSize(this.getSize().width, 300);
+        }
+    }//GEN-LAST:event_bloodsugarKeyTyped
     
     private void addBloodSugar(){
         BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
@@ -168,6 +197,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_bloodsugar;
     private javax.swing.JTextField bloodsugar;
+    private javax.swing.JLabel bloodsugar_warning_label;
     private javax.swing.JLabel insulin_notify_label;
     private javax.swing.JLabel insulin_notify_label1;
     private javax.swing.JScrollPane jScrollPane2;
