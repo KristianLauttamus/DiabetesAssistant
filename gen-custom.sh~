@@ -18,9 +18,9 @@ rm -rfv ../dokumentointi/checkstyle/*
 echo "Copy new PIT -reports..."
 cd target/pit-reports/*
 cp -R * ../../../../dokumentointi/pit/
+cd ../../site
 
 echo "Copy new Checkstyle -report..."
-cd ../../site
 cp -R * ../../../dokumentointi/checkstyle/
 
 if ! [ -z "$1" ]
