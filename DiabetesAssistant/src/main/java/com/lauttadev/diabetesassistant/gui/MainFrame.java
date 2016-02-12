@@ -7,38 +7,47 @@ package com.lauttadev.diabetesassistant.gui;
 
 import com.lauttadev.diabetesassistant.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
-import com.lauttadev.diabetesassistant.models.BloodSugarsList;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.awt.Label;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.MatteBorder;
 
 /**
  *
  * @author krislaut
  */
 public class MainFrame extends javax.swing.JFrame {
-    private Database db;
+    private final Database db;
     
     /**
      * Creates new form MainFrame
+     * @param db
      */
     public MainFrame(Database db) {
         this.db = db;
         
         initComponents();
+        
+        this.mainlist.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        this.mainlist.add(new JPanel(), gbc);
+        
+        this.updateRecentBloodSugars();
         
         Timer t = new Timer(1000, new ActionListener(){
             @Override
@@ -50,6 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
                 timestamp.setText(df.format(today));
             }
         });
+        
         t.start();
         bloodsugar_warning_label.setVisible(false);
     }
@@ -63,31 +73,45 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabs = new javax.swing.JTabbedPane();
+        remember_and_bloodsugars_tab = new javax.swing.JPanel();
         add_bloodsugar = new javax.swing.JButton();
         bloodsugar = new javax.swing.JTextField();
         timestamp = new javax.swing.JLabel();
         insulin_notify_label = new javax.swing.JLabel();
         insulin_notify_label1 = new javax.swing.JLabel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        timed_insulins_list = new javax.swing.JList();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        recent_bloodsugars_list = new javax.swing.JList();
         bloodsugar_warning_label = new javax.swing.JLabel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        remember_insulins = new javax.swing.JScrollPane();
+        recent_bloodsugars = new javax.swing.JScrollPane();
+        mainlist = new javax.swing.JPanel();
+        insulins_tab = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        insulins_scroll_pane = new javax.swing.JScrollPane();
+        insulins_list = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Diabetes Assistant");
-        setPreferredSize(new java.awt.Dimension(500, 275));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setPreferredSize(new java.awt.Dimension(500, 320));
         setResizable(false);
 
+        remember_and_bloodsugars_tab.setMinimumSize(new java.awt.Dimension(500, 300));
+
+        add_bloodsugar.setBackground(new java.awt.Color(240, 240, 220));
         add_bloodsugar.setText("Lisää verensokeri");
+        add_bloodsugar.setBorder(new javax.swing.border.MatteBorder(null));
         add_bloodsugar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 add_bloodsugarMouseClicked(evt);
             }
         });
 
+        bloodsugar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         bloodsugar.setText("Verensokeri");
+        bloodsugar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bloodsugar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 bloodsugarKeyTyped(evt);
@@ -101,70 +125,69 @@ public class MainFrame extends javax.swing.JFrame {
 
         insulin_notify_label1.setText("Viimeisimmät verensokerimittaukset");
 
-        jSplitPane1.setDividerLocation(170);
-        jSplitPane1.setDividerSize(2);
-
-        timed_insulins_list.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(timed_insulins_list);
-
-        jSplitPane1.setLeftComponent(jScrollPane2);
-
-        recent_bloodsugars_list.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(recent_bloodsugars_list);
-
-        jSplitPane1.setRightComponent(jScrollPane4);
-
         bloodsugar_warning_label.setForeground(new java.awt.Color(255, 0, 0));
         bloodsugar_warning_label.setText("Sallitut syötteet ovat HI, LO, XX.XX");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jSplitPane2.setDividerLocation(220);
+        jSplitPane2.setDividerSize(4);
+
+        remember_insulins.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        remember_insulins.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jSplitPane2.setLeftComponent(remember_insulins);
+
+        javax.swing.GroupLayout mainlistLayout = new javax.swing.GroupLayout(mainlist);
+        mainlist.setLayout(mainlistLayout);
+        mainlistLayout.setHorizontalGroup(
+            mainlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 258, Short.MAX_VALUE)
+        );
+        mainlistLayout.setVerticalGroup(
+            mainlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 196, Short.MAX_VALUE)
+        );
+
+        recent_bloodsugars.setViewportView(mainlist);
+
+        jSplitPane2.setRightComponent(recent_bloodsugars);
+
+        javax.swing.GroupLayout remember_and_bloodsugars_tabLayout = new javax.swing.GroupLayout(remember_and_bloodsugars_tab);
+        remember_and_bloodsugars_tab.setLayout(remember_and_bloodsugars_tabLayout);
+        remember_and_bloodsugars_tabLayout.setHorizontalGroup(
+            remember_and_bloodsugars_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(remember_and_bloodsugars_tabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSplitPane1)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(remember_and_bloodsugars_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSplitPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(remember_and_bloodsugars_tabLayout.createSequentialGroup()
                         .addComponent(insulin_notify_label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(insulin_notify_label1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, remember_and_bloodsugars_tabLayout.createSequentialGroup()
                         .addComponent(timestamp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(add_bloodsugar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(bloodsugar_warning_label)
-                                .addGap(70, 70, 70)))))
-                .addContainerGap())
+                        .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, remember_and_bloodsugars_tabLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bloodsugar_warning_label)))
+                .addGap(5, 5, 5))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        remember_and_bloodsugars_tabLayout.setVerticalGroup(
+            remember_and_bloodsugars_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(remember_and_bloodsugars_tabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(remember_and_bloodsugars_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(insulin_notify_label)
                     .addComponent(insulin_notify_label1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(remember_and_bloodsugars_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bloodsugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_bloodsugar)
                     .addComponent(timestamp))
-                .addGap(2, 2, 2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bloodsugar_warning_label)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -172,26 +195,116 @@ public class MainFrame extends javax.swing.JFrame {
         timestamp.getAccessibleContext().setAccessibleName("timeDisplay");
         timestamp.getAccessibleContext().setAccessibleDescription("");
 
+        tabs.addTab("Muistutukset & Verensokerit", remember_and_bloodsugars_tab);
+
+        jSplitPane1.setDividerLocation(250);
+
+        javax.swing.GroupLayout insulins_listLayout = new javax.swing.GroupLayout(insulins_list);
+        insulins_list.setLayout(insulins_listLayout);
+        insulins_listLayout.setHorizontalGroup(
+            insulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 408, Short.MAX_VALUE)
+        );
+        insulins_listLayout.setVerticalGroup(
+            insulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+
+        insulins_scroll_pane.setViewportView(insulins_list);
+
+        jSplitPane1.setRightComponent(insulins_scroll_pane);
+
+        jLabel1.setText("Ajastetut insuliinimuistutukset");
+
+        jLabel2.setText("Muut insuliinit");
+
+        javax.swing.GroupLayout insulins_tabLayout = new javax.swing.GroupLayout(insulins_tab);
+        insulins_tab.setLayout(insulins_tabLayout);
+        insulins_tabLayout.setHorizontalGroup(
+            insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane1)
+            .addGroup(insulins_tabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
+        );
+        insulins_tabLayout.setVerticalGroup(
+            insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, insulins_tabLayout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        tabs.addTab("Insuliinit", insulins_tab);
+
+        getContentPane().add(tabs, java.awt.BorderLayout.CENTER);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_bloodsugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_bloodsugarMouseClicked
-        // TODO add your handling code here:
+        if("HI".contains(bloodsugar.getText()) || "LO".contains(bloodsugar.getText()) || bloodsugar.getText().matches("^[0-9]+\\.?([0-9]+)?$")){
+            addBloodSugar();
+        }
     }//GEN-LAST:event_add_bloodsugarMouseClicked
 
     private void bloodsugarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bloodsugarKeyTyped
-        if("HI".contains(bloodsugar.getText()) || "LO".contains(bloodsugar.getText()) || bloodsugar.getText().matches("/^[0-9]+(\\\\.[0-9]+)?$")){
+        if("HI".contains(bloodsugar.getText()) || "LO".contains(bloodsugar.getText()) || bloodsugar.getText().matches("^[0-9]+\\.?([0-9]+)?$")){
             bloodsugar_warning_label.setVisible(false);
-            this.setSize(this.getSize().width, 275);
+            //this.setSize(this.getSize().width, this.getSize().height - 50);
         } else if(!bloodsugar_warning_label.isVisible()) {
             bloodsugar_warning_label.setVisible(true);
-            this.setSize(this.getSize().width, 300);
+            //this.setSize(this.getSize().width, this.getSize().height + 50);
         }
     }//GEN-LAST:event_bloodsugarKeyTyped
     
     private void addBloodSugar(){
         BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
         db.addBloodSugar(bloodSugar);
+        
+        updateRecentBloodSugars();
+        this.bloodsugar.setText("");
+    }
+    
+    private void updateRecentBloodSugars(){
+        ArrayList<BloodSugar> bs = db.getBloodSugars();
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        for (final BloodSugar b : bs) {
+            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+            JPanel paneeli = new JPanel();
+            paneeli.add(new JLabel(formatter.format(b.getMeasuredAt()) + " - " + b.getBloodSugar()));
+            final JButton btn = new JButton(b.getInsulinName() + " - " + b.getInsulinAmount());
+            if(b.isInsulinTaken()){
+                btn.setEnabled(false);
+            }
+            btn.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    b.takeInsulin();
+                    btn.setEnabled(false);
+                    db.saveBloodSugars();
+                }
+            });
+            paneeli.add(btn);
+            paneeli.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
+            this.mainlist.add(paneeli, gbc, 0);
+        }
+        
+        this.mainlist.validate();
+        this.mainlist.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -200,11 +313,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel bloodsugar_warning_label;
     private javax.swing.JLabel insulin_notify_label;
     private javax.swing.JLabel insulin_notify_label1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPanel insulins_list;
+    private javax.swing.JScrollPane insulins_scroll_pane;
+    private javax.swing.JPanel insulins_tab;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JList recent_bloodsugars_list;
-    private javax.swing.JList timed_insulins_list;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JPanel mainlist;
+    private javax.swing.JScrollPane recent_bloodsugars;
+    private javax.swing.JPanel remember_and_bloodsugars_tab;
+    private javax.swing.JScrollPane remember_insulins;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JLabel timestamp;
     // End of variables declaration//GEN-END:variables
 }

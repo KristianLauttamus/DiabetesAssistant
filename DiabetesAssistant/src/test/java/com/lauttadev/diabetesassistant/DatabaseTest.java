@@ -15,4 +15,8 @@ public class DatabaseTest {
             fail(ex.getMessage());
         }
     }
+    
+    @Test
+    public void test_file_path(){
+    }
 }

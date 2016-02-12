@@ -41,14 +41,14 @@ public class Database {
      */
     public void createFiles() throws IOException {
         // BloodSugars
-        if(this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
+        if(!this.fileExists(this.BLOODSUGARS_FILE_NAME)) {
             File bloodSugarsFile = new File(this.getSavePath(this.BLOODSUGARS_FILE_NAME));
             
             bloodSugarsFile.createNewFile();
         }
         
         // Insulins
-        if(this.fileExists(this.INSULINS_FILE_NAME)) {
+        if(!this.fileExists(this.INSULINS_FILE_NAME)) {
             File insulinsFile = new File(this.getSavePath(this.INSULINS_FILE_NAME));
             
             insulinsFile.createNewFile();
@@ -79,10 +79,10 @@ public class Database {
             this.bloodsugars = gson.fromJson(reader, new TypeToken<ArrayList<BloodSugar>>(){}.getType());  
             
             if(this.bloodsugars == null){
-                this.bloodsugars = new ArrayList<BloodSugar>();
+                this.bloodsugars = new ArrayList();
             }
-        } catch (IOException e) {  
-            e.printStackTrace();  
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         
         return this.bloodsugars;
@@ -93,7 +93,7 @@ public class Database {
      * @return 
      */
     public ArrayList<BloodSugar> getBloodSugars(){
-        if(this.bloodsugars.size() == 0)
+        if(this.bloodsugars.isEmpty())
             return this.getBloodSugarsFromFile();
         
         return this.bloodsugars;
@@ -114,12 +114,10 @@ public class Database {
     public void saveBloodSugars(){
         String bloodSugarsJSON = gson.toJson(this.bloodsugars);
         
-        try {    
-            FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME));  
-            writer.write(bloodSugarsJSON);  
-            writer.close();
+        try (FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME))) {
+            writer.write(bloodSugarsJSON);
         } catch (IOException e) {  
-            e.printStackTrace();  
+            e.printStackTrace();
         }
     }
     
@@ -136,12 +134,11 @@ public class Database {
      * Delete all BloodSugars
      */
     public void deleteBloodSugars(){        
-        try {    
-            FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME));  
+        try (FileWriter writer = new FileWriter(this.getSavePath(this.BLOODSUGARS_FILE_NAME))) {
             writer.write("");  
             writer.close();
             
-            this.bloodsugars = new ArrayList<BloodSugar>();
+            this.bloodsugars = new ArrayList<>();
         } catch (IOException e) {  
             e.printStackTrace();  
         }
@@ -167,7 +164,7 @@ public class Database {
             this.insulins = gson.fromJson(reader, new TypeToken<ArrayList<Insulin>>(){}.getType());  
             
             if(this.insulins == null){
-                this.insulins = new ArrayList<Insulin>();
+                this.insulins = new ArrayList<>();
             }
         } catch (IOException e) {  
             e.printStackTrace();  
@@ -181,7 +178,7 @@ public class Database {
      * @return 
      */
     public ArrayList<Insulin> getInsulins(){
-        if(this.insulins.size() == 0)
+        if(this.insulins.isEmpty())
             return this.getInsulinsFromFile();
         
         return this.insulins;
@@ -202,8 +199,7 @@ public class Database {
     public void saveInsulins(){
         String insulinsJSON = gson.toJson(this.insulins);
         
-        try {    
-            FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME));  
+        try (FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME))) {
             writer.write(insulinsJSON);  
             writer.close();
         } catch (IOException e) {  
@@ -224,12 +220,11 @@ public class Database {
      * Delete all Insulins
      */
     public void deleteInsulins(){        
-        try {    
-            FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME));  
+        try (FileWriter writer = new FileWriter(this.getSavePath(this.INSULINS_FILE_NAME))) {    
             writer.write("");  
             writer.close();
             
-            this.insulins = new ArrayList<Insulin>();
+            this.insulins = new ArrayList<>();
         } catch (IOException e) {  
             e.printStackTrace();  
         }

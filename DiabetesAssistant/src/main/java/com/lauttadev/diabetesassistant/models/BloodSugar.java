@@ -22,7 +22,11 @@ public class BloodSugar {
     }
     public BloodSugar(String text_value){
         if(!text_value.equals("HI") && !text_value.equals("LO")){
-            this.value = Double.valueOf(text_value);
+            try {
+                this.value = Double.valueOf(text_value);
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             this.textValue = text_value;
         }
@@ -40,7 +44,17 @@ public class BloodSugar {
     }
     public BloodSugar(String text_value, Insulin insulin, int amount, boolean taken){
         this.insulinTaken = false;
-        this.textValue = text_value;
+        
+        if(!text_value.equals("HI") && !text_value.equals("LO")){
+            try {
+                this.value = Double.valueOf(text_value);
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            this.textValue = text_value;
+        }
+        
         this.measuredAt = new Date();
         this.insulinName = insulin.getName();
         this.insulinAmount = amount;
