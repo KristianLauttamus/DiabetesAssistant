@@ -10,8 +10,8 @@ Ohjelma esittää myös statistiikkoja mm. keskiarvoja ja arvojen ääripäitä.
 * ajastettujen insuliinien CRUD
 
 ##Luokkakaavio
-![Luokkakaavio](http://yuml.me/37c0dd68)
-[Muokkaa](http://yuml.me/edit/37c0dd68)
+![Luokkakaavio](http://yuml.me/d0b44396)
+[Muokkaa](http://yuml.me/edit/d0b44396)
 
 ##Sekvenssikaaviot
 ![Verensokerin mittaus](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgTWVhc3VyZSBCbG9vZFN1Z2FyCgpHVUktPkRhdGFiYXNlOiBHaXZlIGlucHV0IHRvIGNyZWF0ACMNACIILT4AOwo6IEMADRsAUgpTYXZlADYLR1VJOiBHZXQgYWxsAIEIC3M&s=napkin)
