@@ -43,11 +43,11 @@
                 <version>1.1.8</version>
                 <configuration>
                     <targetClasses>
-                        <param>com.lauttadev.diabetesassistant.Database</param>
+                        <param>com.lauttadev.diabetesassistant.repositories.*</param>
                         <param>com.lauttadev.diabetesassistant.models.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>com.lauttadev.diabetesassistant.Database</param>
+                        <param>com.lauttadev.diabetesassistant.repositories.*</param>
                         <param>com.lauttadev.diabetesassistant.models.*</param>
                     </targetTests>
                 </configuration>

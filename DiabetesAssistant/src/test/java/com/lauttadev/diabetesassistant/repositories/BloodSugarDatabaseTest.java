@@ -1,9 +1,7 @@
-package com.lauttadev.diabetesassistant;
+package com.lauttadev.diabetesassistant.repositories;
 
-import com.lauttadev.diabetesassistant.repositories.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
-import com.lauttadev.diabetesassistant.repositories.DatabaseFile;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Test;
