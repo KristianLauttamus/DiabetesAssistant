@@ -31,3 +31,12 @@ Database->BloodSugar: Access BloodSugar
 BloodSugar->Insulin: Take Insulin
 BloodSugar->Database: Save changes
 ```
+![Ajastetun Insuliinin lisääminen](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgQWRkIFRpbWVkSW5zdWxpbgoKR1VJLT5EYXRhYmFzZTogR2l2ZSBpbnB1dCB0byBjcmVhdGUgdGhlACgOACgILT4AQQw6IEMAKwUAFAsATwpTYXYADQxHVUk6IFJldHVybgCBBA0ncw&s=napkin)
+```
+title Add TimedInsulin
+
+GUI->Database: Give input to create the TimedInsulin
+Database->TimedInsulin: Create
+Database->Database: Save
+Database->GUI: Return TimedInsulin's
+```
