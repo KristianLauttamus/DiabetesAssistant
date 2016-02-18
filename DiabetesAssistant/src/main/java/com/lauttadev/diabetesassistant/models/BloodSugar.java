@@ -7,7 +7,7 @@ package com.lauttadev.diabetesassistant.models;
 
 import java.util.Date;
 
-public class BloodSugar {
+public class BloodSugar implements Model {
     private double value;
     private String textValue = null;
     private Date measuredAt;

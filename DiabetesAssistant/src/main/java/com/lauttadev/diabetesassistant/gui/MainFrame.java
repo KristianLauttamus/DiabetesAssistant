@@ -5,7 +5,7 @@
  */
 package com.lauttadev.diabetesassistant.gui;
 
-import com.lauttadev.diabetesassistant.Database;
+import com.lauttadev.diabetesassistant.repositories.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -29,14 +29,14 @@ import javax.swing.border.MatteBorder;
  * @author krislaut
  */
 public class MainFrame extends javax.swing.JFrame {
-    private final Database db;
+    private final Database<BloodSugar> bloodSugarDatabase;
     
     /**
      * Creates new form MainFrame
-     * @param db
+     * @param bloodSugarDatabase
      */
-    public MainFrame(Database db) {
-        this.db = db;
+    public MainFrame(Database<BloodSugar> bloodSugarDatabase) {
+        this.bloodSugarDatabase = bloodSugarDatabase;
         
         initComponents();
         
@@ -226,14 +226,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(insulins_tabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
         );
         insulins_tabLayout.setVerticalGroup(
             insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, insulins_tabLayout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -266,14 +266,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void addBloodSugar(){
         BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
-        db.addBloodSugar(bloodSugar);
+        bloodSugarDatabase.add(bloodSugar);
         
         updateRecentBloodSugars();
         this.bloodsugar.setText("");
     }
     
     private void updateRecentBloodSugars(){
-        ArrayList<BloodSugar> bs = db.getBloodSugars();
+        ArrayList<BloodSugar> bs = bloodSugarDatabase.all();
         
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -295,7 +295,7 @@ public class MainFrame extends javax.swing.JFrame {
                 {
                     b.takeInsulin();
                     btn.setEnabled(false);
-                    db.saveBloodSugars();
+                    bloodSugarDatabase.save();
                 }
             });
             paneeli.add(btn);

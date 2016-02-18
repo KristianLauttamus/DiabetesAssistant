@@ -1,6 +1,6 @@
 package com.lauttadev.diabetesassistant;
 
-import com.lauttadev.diabetesassistant.Database;
+import com.lauttadev.diabetesassistant.repositories.MainDatabase;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BloodSugarDatabaseTest {
-    private final Database db = new Database();
+    private final MainDatabase db = new MainDatabase();
     
     @After
     public void tearDown() {

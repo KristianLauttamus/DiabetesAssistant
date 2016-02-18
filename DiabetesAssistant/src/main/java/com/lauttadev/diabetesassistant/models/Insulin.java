@@ -8,7 +8,7 @@ package com.lauttadev.diabetesassistant.models;
 
 import java.util.Date;
 
-public class Insulin {
+public class Insulin implements Model {
     private double perCarbohydrate;
     private String name;
     

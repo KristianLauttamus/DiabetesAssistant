@@ -8,7 +8,7 @@ package com.lauttadev.diabetesassistant.models;
 
 import java.util.Calendar;
 
-public class TimedInsulin {
+public class TimedInsulin implements Model {
     private Calendar tookAt;
     private Calendar shouldAt;
     private Insulin insulin;

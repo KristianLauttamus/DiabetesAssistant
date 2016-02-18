@@ -1,11 +1,12 @@
 package com.lauttadev.diabetesassistant;
 
+import com.lauttadev.diabetesassistant.repositories.MainDatabase;
 import java.io.IOException;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 public class DatabaseTest {
-    private final Database db = new Database();
+    private final MainDatabase db = new MainDatabase();
 
     @Test
     public void file_creation(){
