@@ -78,15 +78,29 @@ public enum DatabaseFile {
         return file.exists();
     }
     
+    /**
+     * Write json String to file
+     * @param json String
+     * @throws IOException 
+     */
     public void write(String json) throws IOException {
         FileWriter writer = new FileWriter(this.getFilePath());
         writer.write(json);
     }
     
+    /**
+     * Read the file and return the reader itself
+     * @return BufferedReader
+     * @throws FileNotFoundException 
+     */
     public BufferedReader read() throws FileNotFoundException {
         return new BufferedReader(new FileReader(this.getFilePath()));
     }
     
+    /**
+     * Clear the file and write an empty string
+     * @throws IOException 
+     */
     public void clear() throws IOException {
         FileWriter writer = new FileWriter(this.getFilePath());
         writer.write("");  

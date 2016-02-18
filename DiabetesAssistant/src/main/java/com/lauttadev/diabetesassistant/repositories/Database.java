@@ -11,12 +11,19 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Database class for all the Models and their JSON files
+ * @param <Type> Model
+ */
 public final class Database<Type> {
     private final DatabaseFile databaseFile;
     private ArrayList<Type> data;
     
     public final Gson gson;
     
+    /**
+     * @param databaseFile 
+     */
     public Database(DatabaseFile databaseFile){
         this.gson = new Gson();
         this.databaseFile = databaseFile;
@@ -30,7 +37,7 @@ public final class Database<Type> {
     }
     
     /**
-     * Save Data to a file
+     * Save Data to the file
      */
     public void save() {
         try {
@@ -41,12 +48,20 @@ public final class Database<Type> {
             System.out.println(ex.getMessage());
         }
     }
-            
+    
+    /**
+     * Add model and then save all to file
+     * @param model 
+     */
     public void add(Type model){
         this.data.add(model);
         this.save();
     }
     
+    /**
+     * Return all data from the file itself
+     * @return ArrayList
+     */
     public ArrayList<Type> allFromFile(){
         try {
             //convert the json string back to object  
@@ -61,6 +76,11 @@ public final class Database<Type> {
         
         return this.data;
     }
+    
+    /**
+     * Check if data is empty and then either return from file itself or data
+     * @return ArrayList
+     */
     public ArrayList<Type> all(){
         if(this.data.isEmpty())
             return this.allFromFile();
@@ -68,12 +88,19 @@ public final class Database<Type> {
         return this.data;
     }
     
+    /**
+     * Delete index from data
+     * @param index 
+     */
     public void delete(int index){
         this.data.remove(index);
         
         this.save();
     }
     
+    /**
+     * Delete from the file itself and make data empty
+     */
     public void deleteFromFile(){
         try {
             this.databaseFile.clear();
