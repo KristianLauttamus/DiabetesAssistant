@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lauttadev.diabetesassistant.gui;
 
 import com.lauttadev.diabetesassistant.repositories.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.Insulin;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,31 +20,28 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.MatteBorder;
 
-/**
- *
- * @author krislaut
- */
 public class MainFrame extends javax.swing.JFrame {
     private final Database<BloodSugar> bloodSugarDatabase;
+    private final Database<Insulin> insulinDatabase;
     
     /**
      * Creates new form MainFrame
      * @param bloodSugarDatabase
+     * @param insulinDatabase
      */
-    public MainFrame(Database<BloodSugar> bloodSugarDatabase) {
+    public MainFrame(Database<BloodSugar> bloodSugarDatabase, Database<Insulin> insulinDatabase) {
         this.bloodSugarDatabase = bloodSugarDatabase;
+        this.insulinDatabase = insulinDatabase;
         
         initComponents();
         
         this.mainlist.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        this.mainlist.add(new JPanel(), gbc);
         
         this.updateRecentBloodSugars();
         
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        Date today = Calendar.getInstance().getTime();
+        timestamp.setText(df.format(today));
         Timer t = new Timer(1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,8 +52,8 @@ public class MainFrame extends javax.swing.JFrame {
                 timestamp.setText(df.format(today));
             }
         });
-        
         t.start();
+        
         bloodsugar_warning_label.setVisible(false);
     }
 
@@ -91,12 +84,21 @@ public class MainFrame extends javax.swing.JFrame {
         insulins_list = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        add_insulin_text_field = new javax.swing.JTextField();
+        add_insulin_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Diabetes Assistant");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(500, 320));
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(505, 350));
+        setPreferredSize(new java.awt.Dimension(500, 350));
+        addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                formComponentAdded(evt);
+            }
+        });
+
+        tabs.setMinimumSize(new java.awt.Dimension(505, 380));
 
         remember_and_bloodsugars_tab.setMinimumSize(new java.awt.Dimension(500, 300));
 
@@ -189,13 +191,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(timestamp))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bloodsugar_warning_label)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         timestamp.getAccessibleContext().setAccessibleName("timeDisplay");
         timestamp.getAccessibleContext().setAccessibleDescription("");
 
         tabs.addTab("Muistutukset & Verensokerit", remember_and_bloodsugars_tab);
+
+        insulins_tab.setPreferredSize(new java.awt.Dimension(500, 350));
 
         jSplitPane1.setDividerLocation(250);
 
@@ -218,27 +222,50 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Muut insuliinit");
 
+        add_insulin_button.setText("Lisää insuliini");
+        add_insulin_button.setActionCommand("");
+        add_insulin_button.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(0, 0, 0)));
+        add_insulin_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                add_insulin_buttonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout insulins_tabLayout = new javax.swing.GroupLayout(insulins_tab);
         insulins_tab.setLayout(insulins_tabLayout);
         insulins_tabLayout.setHorizontalGroup(
             insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
             .addGroup(insulins_tabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(insulins_tabLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(insulins_tabLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, insulins_tabLayout.createSequentialGroup()
+                        .addContainerGap(272, Short.MAX_VALUE)
+                        .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_insulin_button)))
                 .addContainerGap())
         );
         insulins_tabLayout.setVerticalGroup(
             insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, insulins_tabLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(insulins_tabLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(insulins_tabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_insulin_button))
+                .addContainerGap())
         );
 
         tabs.addTab("Insuliinit", insulins_tab);
@@ -263,52 +290,172 @@ public class MainFrame extends javax.swing.JFrame {
             //this.setSize(this.getSize().width, this.getSize().height + 50);
         }
     }//GEN-LAST:event_bloodsugarKeyTyped
+
+    private void add_insulin_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_insulin_buttonMouseClicked
+        addInsulin();
+    }//GEN-LAST:event_add_insulin_buttonMouseClicked
+
+    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
+        
+    }//GEN-LAST:event_formComponentAdded
     
     private void addBloodSugar(){
         BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
         bloodSugarDatabase.add(bloodSugar);
-        
-        updateRecentBloodSugars();
         this.bloodsugar.setText("");
+        addBloodSugarToList(bloodSugar);
+        bloodSugarDatabase.save();
+    }
+    
+    private void addBloodSugarToList(final BloodSugar bs){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+        JPanel paneeli = new JPanel();
+        paneeli.add(new JLabel(formatter.format(bs.getMeasuredAt()) + " - " + bs.getBloodSugar()));
+
+        // Take Insulin -button
+        final JButton btn = new JButton(bs.getInsulinName() + " - " + bs.getInsulinAmount());
+        paneeli.add(btn);
+        btn.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                bs.takeInsulin();
+                btn.setEnabled(false);
+                bloodSugarDatabase.save();
+            }
+        });
+
+        // Remove -button
+        final JButton btnRemove = new JButton("Poista");
+        if(bs.isInsulinTaken()){
+            btn.setEnabled(false);
+        }
+        paneeli.add(btnRemove);
+        btnRemove.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                bloodSugarDatabase.delete(bs);
+                mainlist.remove(btnRemove.getParent());
+                mainlist.revalidate();
+                mainlist.repaint();
+            }
+        });
+        paneeli.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
+        this.mainlist.add(paneeli, gbc, 0);
+        mainlist.revalidate();
+        mainlist.repaint();
     }
     
     private void updateRecentBloodSugars(){
-        ArrayList<BloodSugar> bs = bloodSugarDatabase.all();
+        ArrayList<BloodSugar> bsl = bloodSugarDatabase.all();
+        
+        this.mainlist.removeAll();
+        
+        GridBagConstraints gbcTemp = new GridBagConstraints();
+        gbcTemp.gridwidth = GridBagConstraints.REMAINDER;
+        gbcTemp.weightx = 1;
+        gbcTemp.weighty = 1;
+        this.mainlist.add(new JPanel(), gbcTemp);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        for (final BloodSugar bs : bsl) {
+            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+            JPanel paneeli = new JPanel();
+            paneeli.add(new JLabel(formatter.format(bs.getMeasuredAt()) + " - " + bs.getBloodSugar()));
+            
+            // Take Insulin -button
+            final JButton btn = new JButton(bs.getInsulinName() + " - " + bs.getInsulinAmount());
+            paneeli.add(btn);
+            btn.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    bs.takeInsulin();
+                    btn.setEnabled(false);
+                    bloodSugarDatabase.save();
+                }
+            });
+            
+            // Remove -button
+            final JButton btnRemove = new JButton("Poista");
+            if(bs.isInsulinTaken()){
+                btn.setEnabled(false);
+            }
+            paneeli.add(btnRemove);
+            btnRemove.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    bloodSugarDatabase.delete(bs);
+                    mainlist.remove(btnRemove.getParent());
+                    mainlist.revalidate();
+                    mainlist.repaint();
+                }
+            });
+            paneeli.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
+            this.mainlist.add(paneeli, gbc, 0);
+        }
+        
+        this.mainlist.revalidate();
+        this.mainlist.repaint();
+    }
+
+    private void addInsulin(){
+        Insulin insulin = new Insulin(add_insulin_text_field.getText());
+        insulinDatabase.add(insulin);
+        
+        updateInsulins();
+        
+    }
+    
+    private void updateInsulins(){
+        ArrayList<Insulin> il = this.insulinDatabase.all();
         
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
-        for (final BloodSugar b : bs) {
+        for (final Insulin i : il) {
             SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
             JPanel paneeli = new JPanel();
-            paneeli.add(new JLabel(formatter.format(b.getMeasuredAt()) + " - " + b.getBloodSugar()));
-            final JButton btn = new JButton(b.getInsulinName() + " - " + b.getInsulinAmount());
-            if(b.isInsulinTaken()){
-                btn.setEnabled(false);
-            }
-            btn.addActionListener(new ActionListener()
+            paneeli.add(new JLabel(i.getName() + " " + i.getPerCarbohydrate()));
+            final JButton btnRemove = new JButton("Poista");
+            btnRemove.addActionListener(new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    b.takeInsulin();
-                    btn.setEnabled(false);
-                    bloodSugarDatabase.save();
+                    insulinDatabase.delete(i);
                 }
             });
-            paneeli.add(btn);
+            paneeli.add(btnRemove);
             paneeli.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
-            this.mainlist.add(paneeli, gbc, 0);
+            this.insulins_list.add(paneeli, gbc, 0);
         }
         
-        this.mainlist.validate();
-        this.mainlist.repaint();
+        this.insulins_list.revalidate();
+        this.insulins_list.repaint();
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_bloodsugar;
+    private javax.swing.JButton add_insulin_button;
+    private javax.swing.JTextField add_insulin_text_field;
     private javax.swing.JTextField bloodsugar;
     private javax.swing.JLabel bloodsugar_warning_label;
     private javax.swing.JLabel insulin_notify_label;

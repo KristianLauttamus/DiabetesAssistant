@@ -1,11 +1,17 @@
 package com.lauttadev.diabetesassistant.repositories;
 
+import com.google.gson.reflect.TypeToken;
+import com.lauttadev.diabetesassistant.models.BloodSugar;
+import com.lauttadev.diabetesassistant.models.Insulin;
+import com.lauttadev.diabetesassistant.models.TimedInsulin;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public enum DatabaseFile {
     // Actual files
@@ -78,6 +84,22 @@ public enum DatabaseFile {
     }
     
     /**
+     * Return's Type for Gson
+     * @return 
+     */
+    public Type getTypeByFile(){
+        if(this.equals(DatabaseFile.BLOODSUGARS) || this.equals(DatabaseFile.BLOODSUGARS_TEST)){
+            return new TypeToken<ArrayList<BloodSugar>>(){}.getType();
+        } else if(this.equals(DatabaseFile.INSULINS) || this.equals(DatabaseFile.INSULINS_TEST)){
+            return new TypeToken<ArrayList<Insulin>>(){}.getType();
+        } else if(this.equals(DatabaseFile.TIMEDINSULINS) || this.equals(DatabaseFile.TIMEDINSULINS_TEST)){
+            return new TypeToken<ArrayList<TimedInsulin>>(){}.getType();
+        }
+        
+        return null;
+    }
+    
+    /**
      * Write json String to file
      * @param json String
      * @throws IOException 
@@ -85,6 +107,7 @@ public enum DatabaseFile {
     public void write(String json) throws IOException {
         FileWriter writer = new FileWriter(this.getFilePath());
         writer.write(json);
+        writer.close();
     }
     
     /**

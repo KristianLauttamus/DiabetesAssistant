@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lauttadev.diabetesassistant.models;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class BloodSugar implements Model {
+public class BloodSugar {
     private double value;
     private String textValue = null;
     private Date measuredAt;
@@ -120,5 +116,37 @@ public class BloodSugar implements Model {
     }
     public void setInsulinAmount(int insulinAmount) {
         this.insulinAmount = insulinAmount;
-    }    
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
+        hash = 11 * hash + Objects.hashCode(this.textValue);
+        hash = 11 * hash + Objects.hashCode(this.measuredAt);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BloodSugar other = (BloodSugar) obj;
+        if (Double.doubleToLongBits(this.value) != Double.doubleToLongBits(other.value)) {
+            return false;
+        }
+        if (!Objects.equals(this.textValue, other.textValue)) {
+            return false;
+        }
+        if (!Objects.equals(this.measuredAt, other.measuredAt)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.lauttadev.diabetesassistant.models;
 
-import java.util.Date;
+import java.util.ArrayList;
 
-public class Insulin implements Model {
+public class Insulin {
     private double perCarbohydrate;
     private String name;
     
@@ -31,7 +25,11 @@ public class Insulin implements Model {
             return new Double(this.perCarbohydrate * carbohydrates).intValue();
         }
     }
-
+    
+    /**
+     * Getters and Setters
+     */
+    
     public double getPerCarbohydrate() {
         return perCarbohydrate;
     }

@@ -1,23 +1,16 @@
 package com.lauttadev.diabetesassistant.repositories;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Database class for all the Models and their JSON files
- * @param <Type> Model
+ * @param <E> Model
  */
-public final class Database<Type> {
+public final class Database<E> {
     private final DatabaseFile databaseFile;
-    private ArrayList<Type> data;
+    private ArrayList<E> data;
     
     public final Gson gson;
     
@@ -51,9 +44,9 @@ public final class Database<Type> {
     
     /**
      * Add model and then save all to file
-     * @param model 
+     * @param model
      */
-    public void add(Type model){
+    public void add(E model){
         this.data.add(model);
         this.save();
     }
@@ -62,16 +55,15 @@ public final class Database<Type> {
      * Return all data from the file itself
      * @return ArrayList
      */
-    public ArrayList<Type> allFromFile(){
+    public ArrayList<E> allFromFile() {
         try {
-            //convert the json string back to object  
-            this.data = this.gson.fromJson(this.databaseFile.read(), new TypeToken<ArrayList<Type>>(){}.getType());
+            this.data = this.gson.fromJson(this.databaseFile.read(), this.databaseFile.getTypeByFile());
             
             if(this.data == null){
                 this.data = new ArrayList<>();
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
         
         return this.data;
@@ -81,7 +73,7 @@ public final class Database<Type> {
      * Check if data is empty and then either return from file itself or data
      * @return ArrayList
      */
-    public ArrayList<Type> all(){
+    public ArrayList<E> all(){
         if(this.data.isEmpty())
             return this.allFromFile();
         
@@ -94,7 +86,15 @@ public final class Database<Type> {
      */
     public void delete(int index){
         this.data.remove(index);
-        
+        this.save();
+    }
+    
+    /**
+     * Delete object from data 
+     * @param object
+     */
+    public void delete(E object){
+        this.data.remove(object);
         this.save();
     }
     
