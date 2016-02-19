@@ -8,3 +8,7 @@
 - Käytin useita tunteja taustatutkimiseen ja Swingin selvittelyyn. Haluaisin toteuttaa hienon käyttöliittymän, mutta se ei ilmeisesti ole niinkään mahdollista Swingillä...
 - Implementoin myöskin Checkstylen ja automatisoin raportin linkityksen jne.
 - Lopuksi päivittelin vähän käyttöliittymää
+
+19.2.2016
+- Muokkasin sovelluksen rakennetta paljolti helpompiluettavaan ja tämän myötä myös fiksumpaan rakenteeseen.
+- Lisäsin Insuliinien lisäyksen ja korjasin Verensokereiden ja Insuliinien listauksia.
