@@ -9,6 +9,7 @@ import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
 import com.lauttadev.diabetesassistant.repositories.Database;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,6 @@ import java.util.Date;
 import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.MatteBorder;
@@ -202,22 +202,31 @@ public class BloodSugarsTab extends javax.swing.JPanel {
         BloodSugar bloodSugar = new BloodSugar(this.bloodsugar.getText());
         
         ArrayList<Insulin> insulins = this.insulinDatabase.all();
-        Object[] choices = new Object[insulins.size()+1];
-        insulins.toArray(choices);
-        choices[insulins.size()] = "Ei mikään";
+//        Object[] choices = new Object[insulins.size()+1];
+//        insulins.toArray(choices);
+//        choices[insulins.size()] = "Ei mikään";
+//        
+//        int carbs = Integer.parseInt( JOptionPane.showInputDialog(this,"Kuinka paljon hiilihydraatteja meinaat syödä?","Hiilihydraatit",JOptionPane.INFORMATION_MESSAGE));
+//        Object input = JOptionPane.showInputDialog(null, "Valitse insuliini",
+//            "Valitse pistettävä insuliini", JOptionPane.QUESTION_MESSAGE, null,
+//            choices, // Array of choices
+//            choices[insulins.size()]); // Initial choice
+//        
+//        if(input.getClass().equals(Insulin.class)){
+//            Insulin insulin = (Insulin) input;
+//            bloodSugar.setInsulinAmount(insulin.calculateAmount(carbs, bloodSugar));
+//            bloodSugar.setInsulinName(insulin);
+//        }
         
-        int carbs = Integer.parseInt( JOptionPane.showInputDialog(this,"Kuinka paljon hiilihydraatteja meinaat syödä?","Hiilihydraatit",JOptionPane.INFORMATION_MESSAGE));
-        Object input = JOptionPane.showInputDialog(null, "Valitse insuliini",
-            "Valitse pistettävä insuliini", JOptionPane.QUESTION_MESSAGE, null,
-            choices, // Array of choices
-            choices[insulins.size()]); // Initial choice
-        
-        if(input.getClass().equals(Insulin.class)){
-            Insulin insulin = (Insulin) input;
-            bloodSugar.setInsulinAmount(insulin.calculateAmount(carbs, bloodSugar));
-            bloodSugar.setInsulinName(insulin);
-        }
-        
+        Component[] components = this.getComponents();
+        this.removeAll();
+        this.setLayout(new javax.swing.GroupLayout(this));
+        AddBloodSugar abs = new AddBloodSugar(bloodSugar, bloodSugarDatabase, insulins, this, components);
+        abs.setSize(this.getSize());
+        this.add(abs);
+        abs.setVisible(true);
+        this.revalidate();
+        this.repaint();
         
         bloodSugarDatabase.add(bloodSugar);
         this.bloodsugar.setText("");

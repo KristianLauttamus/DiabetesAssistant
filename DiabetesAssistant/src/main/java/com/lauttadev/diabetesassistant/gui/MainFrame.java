@@ -21,8 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         initComponents();
         
-        
-        this.tabs.add("Insuliinit", new BloodSugarsTab(bloodSugarDatabase, insulinDatabase));
+        this.tabs.add("Verensokerit ja muistutukset", new BloodSugarsTab(bloodSugarDatabase, insulinDatabase));
         this.tabs.add("Insuliinit", new InsulinsTab(insulinDatabase));
         
         // TODO - Not Working
