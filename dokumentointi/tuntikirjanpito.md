@@ -12,3 +12,9 @@
 19.2.2016
 - Muokkasin sovelluksen rakennetta paljolti helpompiluettavaan ja tämän myötä myös fiksumpaan rakenteeseen.
 - Lisäsin Insuliinien lisäyksen ja korjasin Verensokereiden ja Insuliinien listauksia.
+
+23.2.2016
+- GUI alkoi toimimaan tekemällä asioista vähän tai paljonkin yksinkertaisempia.
+- Useat hiuksiatiputtavat ärsytykset Swingistä rauhoittunut ja löysin Swingistä jotain positiivistakin.
+- Tekisi mieli pistää GUI checkstyleen, mutta generoitu koodi näyttää hirveältä.
+- Korjailin testejä ja lisään niitä myöhemmin lisää.
