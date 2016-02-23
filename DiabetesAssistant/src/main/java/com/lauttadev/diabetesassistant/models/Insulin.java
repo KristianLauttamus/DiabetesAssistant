@@ -1,13 +1,12 @@
 package com.lauttadev.diabetesassistant.models;
 
-import java.util.ArrayList;
-
 public class Insulin {
     private double perCarbohydrate;
     private String name;
     
-    public Insulin(String name){
+    public Insulin(String name, double perCarbohydrate){
         this.name = name;
+        this.perCarbohydrate = perCarbohydrate;
     }
     
     public int calculateAmount(int carbohydrates){

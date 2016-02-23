@@ -25,15 +25,18 @@ import javax.swing.border.MatteBorder;
  * @author Kristian
  */
 public class InsulinsTab extends javax.swing.JPanel {
-    private Database<Insulin> insulinDatabase;
+    private final Database<Insulin> insulinDatabase;
     
     /**
      * Creates new form InsulinsTab
+     * @param insulinDatabase
      */
     public InsulinsTab(Database<Insulin> insulinDatabase) {
         this.insulinDatabase = insulinDatabase;
         
         initComponents();
+        
+        this.add_insulin_button.setEnabled(false);
         
         this.insulins_list.setLayout(new GridBagLayout());
         
@@ -56,6 +59,20 @@ public class InsulinsTab extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         add_insulin_text_field = new javax.swing.JTextField();
         add_insulin_button = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        per_carb_textfield = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        add_timedInsulin_amount = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        add_timed_insulin_hour = new javax.swing.JTextField();
+        insulins_combo_box = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(720, 580));
 
         jSplitPane1.setDividerLocation(250);
 
@@ -67,7 +84,7 @@ public class InsulinsTab extends javax.swing.JPanel {
         );
         insulins_listLayout.setVerticalGroup(
             insulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 283, Short.MAX_VALUE)
+            .addGap(0, 365, Short.MAX_VALUE)
         );
 
         insulins_scroll_pane.setViewportView(insulins_list);
@@ -78,6 +95,12 @@ public class InsulinsTab extends javax.swing.JPanel {
 
         jLabel2.setText("Muut insuliinit");
 
+        add_insulin_text_field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add_insulin_text_fieldKeyTyped(evt);
+            }
+        });
+
         add_insulin_button.setText("Lisää insuliini");
         add_insulin_button.setActionCommand("");
         add_insulin_button.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(0, 0, 0)));
@@ -87,30 +110,112 @@ public class InsulinsTab extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setText("Per hiilihydraatit");
+
+        per_carb_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        per_carb_textfield.setText("XX.XX");
+        per_carb_textfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                per_carb_textfieldKeyTyped(evt);
+            }
+        });
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Lisää insuliini");
+
+        jButton1.setText("Lisää muistutus");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel5.setText("Määrä");
+        jLabel5.setFocusable(false);
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        add_timedInsulin_amount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        add_timedInsulin_amount.setText("XX.XX");
+
+        jLabel6.setText("Muistutusajankohta");
+
+        add_timed_insulin_hour.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        add_timed_insulin_hour.setText("HH:MM");
+
+        insulins_combo_box.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setText("Valitse insuliini");
+
+        jLabel8.setText("Nimi");
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Lisää insuliinimuistutus");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(per_carb_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_insulin_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_timedInsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(add_timed_insulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(insulins_combo_box, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(add_insulin_button)))
+                            .addComponent(jLabel2)))
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 355, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(377, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel5)
+                    .addComponent(add_timedInsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(add_timed_insulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(insulins_combo_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(per_carb_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_insulin_button)
+                    .addComponent(jLabel8))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -118,12 +223,8 @@ public class InsulinsTab extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addComponent(jLabel2))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jSplitPane1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(add_insulin_text_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(add_insulin_button))
-                    .addContainerGap()))
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(105, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -131,14 +232,38 @@ public class InsulinsTab extends javax.swing.JPanel {
         addInsulin();
     }//GEN-LAST:event_add_insulin_buttonMouseClicked
 
+    private void add_insulin_text_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add_insulin_text_fieldKeyTyped
+        if(this.checkValidInsulin()){
+            this.add_insulin_button.setEnabled(true);
+        } else {
+            this.add_insulin_button.setEnabled(false);
+        }
+    }//GEN-LAST:event_add_insulin_text_fieldKeyTyped
+
+    private void per_carb_textfieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_per_carb_textfieldKeyTyped
+        if(this.checkValidInsulin()){
+            this.add_insulin_button.setEnabled(true);
+        } else {
+            this.add_insulin_button.setEnabled(false);
+        }
+    }//GEN-LAST:event_per_carb_textfieldKeyTyped
+
+    private boolean checkValidInsulin(){
+        return this.per_carb_textfield.getText().matches("^[0-9]+\\.?([0-9]+)?$") && !this.add_insulin_text_field.getText().equals("");
+    }
+    
     /**
      * Add Insulin to database and list
      */
     private void addInsulin(){
-        Insulin insulin = new Insulin(add_insulin_text_field.getText());
-        insulinDatabase.add(insulin);
-        
-        addInsulinToList(insulin, true);
+        if(this.checkValidInsulin()){
+            Insulin insulin = new Insulin(this.add_insulin_text_field.getText(), Double.valueOf(this.per_carb_textfield.getText()));
+            insulinDatabase.add(insulin);
+
+            addInsulinToList(insulin, true);
+        } else {
+            this.add_insulin_button.setEnabled(false);
+        }
     }
     
     /**
@@ -205,10 +330,22 @@ public class InsulinsTab extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_insulin_button;
     private javax.swing.JTextField add_insulin_text_field;
+    private javax.swing.JTextField add_timedInsulin_amount;
+    private javax.swing.JTextField add_timed_insulin_hour;
+    private javax.swing.JComboBox insulins_combo_box;
     private javax.swing.JPanel insulins_list;
     private javax.swing.JScrollPane insulins_scroll_pane;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTextField per_carb_textfield;
     // End of variables declaration//GEN-END:variables
 }

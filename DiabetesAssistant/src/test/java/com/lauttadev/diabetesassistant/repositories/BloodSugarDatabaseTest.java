@@ -64,10 +64,11 @@ public class BloodSugarDatabaseTest {
     
     @Test
     public void bloodsugar_comes_with_insulin(){
-        BloodSugar bsWithInsulin = new BloodSugar("HI", new Insulin("Novorapid"), 10, true);
+        BloodSugar bsWithInsulin = new BloodSugar("HI", new Insulin("Novorapid", 12.12), 10, true);
         
         this.db.add(bsWithInsulin);
         
         assertEquals("Novorapid", this.db.all().get(0).getInsulinName());
+        assertEquals(10, this.db.all().get(0).getInsulinAmount());
     }
 }

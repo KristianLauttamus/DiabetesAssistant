@@ -3,6 +3,7 @@ package com.lauttadev.diabetesassistant.gui;
 import com.lauttadev.diabetesassistant.repositories.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
+import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -24,16 +25,27 @@ public class MainFrame extends javax.swing.JFrame {
         this.tabs.add("Verensokerit ja muistutukset", new BloodSugarsTab(bloodSugarDatabase, insulinDatabase));
         this.tabs.add("Insuliinit", new InsulinsTab(insulinDatabase));
         
-        // TODO - Not Working
         // Add listener to tabs
+        final MainFrame frame = this;
+        frame.updateSizeByTab();
         this.tabs.addChangeListener(new ChangeListener(){
             @Override
             public void stateChanged(ChangeEvent e) {
-                tabs.setSize(tabs.getComponent(tabs.getSelectedIndex()).getPreferredSize());
+                frame.updateSizeByTab();
             }
         });
         
         
+    }
+    
+    public void updateSizeByTab(){
+        this.getContentPane().setSize(tabs.getSelectedComponent().getPreferredSize());
+        this.getContentPane().doLayout();
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+        this.setSize(tabs.getSelectedComponent().getPreferredSize());
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -51,7 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(505, 350));
         setPreferredSize(new java.awt.Dimension(500, 350));
 
-        tabs.setMinimumSize(new java.awt.Dimension(505, 380));
+        tabs.setMinimumSize(null);
+        tabs.setPreferredSize(null);
         getContentPane().add(tabs, java.awt.BorderLayout.CENTER);
 
         pack();

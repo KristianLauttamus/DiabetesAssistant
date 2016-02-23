@@ -27,9 +27,9 @@ public class BloodSugarTest {
         assertEquals(bsNothing.getTextValue(), null);
         assertEquals(bsValue.getBloodSugar(), "0.1");
         
-        BloodSugar bswInsulinText = new BloodSugar("HI", new Insulin("Novorapid"), 10, false);
-        BloodSugar bswInsulinValue = new BloodSugar(0.1, new Insulin("NovorapidDouble"), 10, false);
-        BloodSugar bswInsulinNothing = new BloodSugar("asd", new Insulin("NovorapidNothing"), 10, false);
+        BloodSugar bswInsulinText = new BloodSugar("HI", new Insulin("Novorapid", 10), 10, false);
+        BloodSugar bswInsulinValue = new BloodSugar(0.1, new Insulin("NovorapidDouble", 10), 10, false);
+        BloodSugar bswInsulinNothing = new BloodSugar("asd", new Insulin("NovorapidNothing", 10), 10, false);
         
         assertEquals(bswInsulinText.getTextValue(), "HI");
         assertEquals(bswInsulinText.getInsulinName(), "Novorapid");
@@ -46,7 +46,7 @@ public class BloodSugarTest {
         bs.setInsulinAmount(20);
         assertEquals(bs.getInsulinAmount(), 20);
         
-        bs.setInsulinName(new Insulin("Testi"));
+        bs.setInsulinName(new Insulin("Testi", 10));
         assertEquals(bs.getInsulinName(), "Testi");
     }
 }

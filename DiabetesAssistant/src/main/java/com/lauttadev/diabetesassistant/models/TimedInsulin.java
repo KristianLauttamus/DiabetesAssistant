@@ -10,13 +10,15 @@ import java.util.Calendar;
 
 public class TimedInsulin {
     private Calendar tookAt;
-    private Calendar shouldAt;
-    private Insulin insulin;
+    private final Calendar shouldAt;
+    private final Insulin insulin;
+    private final double amount;
     
-    public TimedInsulin(Calendar shouldAt, Insulin insulin){
+    public TimedInsulin(Calendar shouldAt, Insulin insulin, int amount){
         this.shouldAt = shouldAt;
         this.shouldAt.set(Calendar.DAY_OF_YEAR, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
         this.insulin = insulin;
+        this.amount = amount;
     }
     
     /**

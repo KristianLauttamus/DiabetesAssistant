@@ -6,7 +6,7 @@ import org.junit.Test;
 public class InsulinTest {
     @Test
     public void calculate_how_much_insulin(){
-        Insulin insulin = new Insulin("Novorapid");
+        Insulin insulin = new Insulin("Novorapid", 10);
         insulin.setPerCarbohydrate(0.1);
         
         int carbhyd = 100;
@@ -16,8 +16,7 @@ public class InsulinTest {
     
     @Test
     public void calculate_how_much_insulin_with_bloodsugar(){
-        Insulin insulin = new Insulin("Novorapid");
-        insulin.setPerCarbohydrate(0.1);
+        Insulin insulin = new Insulin("Novorapid", 0.01);
         
         BloodSugar bs = new BloodSugar(20.0);
         
@@ -28,8 +27,7 @@ public class InsulinTest {
     
     @Test
     public void calculate_how_much_insulin_with_hi_bloodsugar(){
-        Insulin insulin = new Insulin("Novorapid");
-        insulin.setPerCarbohydrate(0.1);
+        Insulin insulin = new Insulin("Novorapid", 0.1);
         
         BloodSugar bs = new BloodSugar("HI");
         
@@ -40,8 +38,7 @@ public class InsulinTest {
     
     @Test
     public void calculate_how_much_insulin_with_lo_bloodsugar(){
-        Insulin insulin = new Insulin("Novorapid");
-        insulin.setPerCarbohydrate(0.1);
+        Insulin insulin = new Insulin("Novorapid", 0.1);
         
         BloodSugar bs = new BloodSugar("LO");
         
