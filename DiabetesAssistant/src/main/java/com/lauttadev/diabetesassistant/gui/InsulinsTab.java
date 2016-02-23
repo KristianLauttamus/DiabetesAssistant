@@ -6,6 +6,7 @@
 package com.lauttadev.diabetesassistant.gui;
 
 import com.lauttadev.diabetesassistant.models.Insulin;
+import com.lauttadev.diabetesassistant.models.TimedInsulin;
 import com.lauttadev.diabetesassistant.repositories.Database;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,19 +28,22 @@ import javax.swing.border.MatteBorder;
  */
 public class InsulinsTab extends javax.swing.JPanel {
     private final Database<Insulin> insulinDatabase;
+    private final Database<TimedInsulin> timedInsulindatabase;
     
     /**
      * Creates new form InsulinsTab
      * @param insulinDatabase
      */
-    public InsulinsTab(Database<Insulin> insulinDatabase) {
+    public InsulinsTab(Database<Insulin> insulinDatabase, Database<TimedInsulin> timedInsulindatabase) {
         this.insulinDatabase = insulinDatabase;
+        this.timedInsulindatabase = timedInsulindatabase;
         
         initComponents();
         
         this.add_insulin_button.setEnabled(false);
         
         this.insulins_list.setLayout(new GridBagLayout());
+        this.timedinsulins_list.setLayout(new GridBagLayout());
         
         this.updateInsulinsList();
     }
@@ -55,6 +60,8 @@ public class InsulinsTab extends javax.swing.JPanel {
         jSplitPane1 = new javax.swing.JSplitPane();
         insulins_scroll_pane = new javax.swing.JScrollPane();
         insulins_list = new javax.swing.JPanel();
+        timedinsulins_scroll_pane = new javax.swing.JScrollPane();
+        timedinsulins_list = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         add_insulin_text_field = new javax.swing.JTextField();
@@ -64,9 +71,9 @@ public class InsulinsTab extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        add_timedInsulin_amount = new javax.swing.JTextField();
+        add_timedinsulin_amount = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        add_timed_insulin_hour = new javax.swing.JTextField();
+        add_timedinsulin_hour = new javax.swing.JTextField();
         insulins_combo_box = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -74,13 +81,15 @@ public class InsulinsTab extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(720, 580));
 
-        jSplitPane1.setDividerLocation(250);
+        jSplitPane1.setDividerLocation(300);
+
+        insulins_scroll_pane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         javax.swing.GroupLayout insulins_listLayout = new javax.swing.GroupLayout(insulins_list);
         insulins_list.setLayout(insulins_listLayout);
         insulins_listLayout.setHorizontalGroup(
             insulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 408, Short.MAX_VALUE)
+            .addGap(0, 548, Short.MAX_VALUE)
         );
         insulins_listLayout.setVerticalGroup(
             insulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +100,26 @@ public class InsulinsTab extends javax.swing.JPanel {
 
         jSplitPane1.setRightComponent(insulins_scroll_pane);
 
+        timedinsulins_scroll_pane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        javax.swing.GroupLayout timedinsulins_listLayout = new javax.swing.GroupLayout(timedinsulins_list);
+        timedinsulins_list.setLayout(timedinsulins_listLayout);
+        timedinsulins_listLayout.setHorizontalGroup(
+            timedinsulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 397, Short.MAX_VALUE)
+        );
+        timedinsulins_listLayout.setVerticalGroup(
+            timedinsulins_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 334, Short.MAX_VALUE)
+        );
+
+        timedinsulins_scroll_pane.setViewportView(timedinsulins_list);
+
+        jSplitPane1.setLeftComponent(timedinsulins_scroll_pane);
+
         jLabel1.setText("Ajastetut insuliinimuistutukset");
 
-        jLabel2.setText("Muut insuliinit");
+        jLabel2.setText("Insuliinit");
 
         add_insulin_text_field.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -130,13 +156,13 @@ public class InsulinsTab extends javax.swing.JPanel {
         jLabel5.setFocusable(false);
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        add_timedInsulin_amount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        add_timedInsulin_amount.setText("XX.XX");
+        add_timedinsulin_amount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        add_timedinsulin_amount.setText("XX.XX");
 
         jLabel6.setText("Muistutusajankohta");
 
-        add_timed_insulin_hour.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        add_timed_insulin_hour.setText("HH:MM");
+        add_timedinsulin_hour.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        add_timedinsulin_hour.setText("HH:MM");
 
         insulins_combo_box.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -169,11 +195,11 @@ public class InsulinsTab extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(add_timedInsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(add_timedinsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(add_timed_insulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(add_timedinsulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,9 +227,9 @@ public class InsulinsTab extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel5)
-                    .addComponent(add_timedInsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_timedinsulin_amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(add_timed_insulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_timedinsulin_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(insulins_combo_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -311,6 +337,88 @@ public class InsulinsTab extends javax.swing.JPanel {
     private void updateInsulinsList(){
         ArrayList<Insulin> il = this.insulinDatabase.all();
         
+        // Update combobox
+        this.insulins_combo_box.setModel(new DefaultComboBoxModel(il.toArray()));
+        
+        this.insulins_list.removeAll();
+        
+        GridBagConstraints gbcTemp = new GridBagConstraints();
+        gbcTemp.gridwidth = GridBagConstraints.REMAINDER;
+        gbcTemp.weightx = 1;
+        gbcTemp.weighty = 1;
+        this.insulins_list.add(new JPanel(), gbcTemp);
+        
+        for (final Insulin i : il) {
+            addInsulinToList(i, false);
+        }
+        
+        this.insulins_list.revalidate();
+        this.insulins_list.repaint();
+    }
+    
+    private boolean checkValidTimedInsulin(){
+        return !this.insulinDatabase.all().isEmpty() && this.add_timedinsulin_amount.getText().matches("^[0-9]+\\.?([0-9]+)?$") && this.add_timedinsulin_hour.getText().matches("^[0-12]+\\:?([0-12]+)?$");
+    }
+    
+    /**
+     * Add Insulin to database and list
+     */
+    private void addTimedInsulin(){
+        if(this.checkValidTimedInsulin()){
+            TimedInsulin timedInsulin = new TimedInsulin(this.add_insulin_text_field.getText(), Double.valueOf(this.per_carb_textfield.getText()));
+            this.timedInsulinDatabase.add(timedInsulin);
+
+            addInsulinToList(insulin, true);
+        } else {
+            this.add_insulin_button.setEnabled(false);
+        }
+    }
+    
+    /**
+     * Add Insulin to list
+     * @param insulin
+     * @param refresh 
+     */
+    private void addInsulinToList(final Insulin insulin, boolean refresh){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+        JPanel paneeli = new JPanel();
+        paneeli.add(new JLabel(insulin.getName() + " " + insulin.getPerCarbohydrate()));
+        
+        // Remove -Button
+        final JButton btnRemove = new JButton("Poista");
+        btnRemove.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                insulinDatabase.delete(insulin);
+                insulins_list.remove(btnRemove.getParent());
+                insulins_list.revalidate();
+                insulins_list.repaint();
+            }
+        });
+        paneeli.add(btnRemove);
+        
+        paneeli.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
+        this.insulins_list.add(paneeli, gbc, 0);
+        
+        if(refresh){
+            this.insulins_list.revalidate();
+            this.insulins_list.repaint();
+        }
+    }
+    
+    /**
+     * Update all Insulins to list
+     */
+    private void updateInsulinsList(){
+        ArrayList<Insulin> il = this.insulinDatabase.all();
+        
         this.insulins_list.removeAll();
         
         GridBagConstraints gbcTemp = new GridBagConstraints();
@@ -330,8 +438,8 @@ public class InsulinsTab extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_insulin_button;
     private javax.swing.JTextField add_insulin_text_field;
-    private javax.swing.JTextField add_timedInsulin_amount;
-    private javax.swing.JTextField add_timed_insulin_hour;
+    private javax.swing.JTextField add_timedinsulin_amount;
+    private javax.swing.JTextField add_timedinsulin_hour;
     private javax.swing.JComboBox insulins_combo_box;
     private javax.swing.JPanel insulins_list;
     private javax.swing.JScrollPane insulins_scroll_pane;
@@ -347,5 +455,7 @@ public class InsulinsTab extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextField per_carb_textfield;
+    private javax.swing.JPanel timedinsulins_list;
+    private javax.swing.JScrollPane timedinsulins_scroll_pane;
     // End of variables declaration//GEN-END:variables
 }
