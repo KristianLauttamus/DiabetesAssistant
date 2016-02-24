@@ -11,13 +11,13 @@ import java.util.Calendar;
 public class TimedInsulin {
     private Calendar tookAt;
     private final Calendar shouldAt;
-    private final Insulin insulin;
+    private final String insulinName;
     private final double amount;
     
     public TimedInsulin(Calendar shouldAt, Insulin insulin, int amount){
         this.shouldAt = shouldAt;
         this.shouldAt.set(Calendar.DAY_OF_YEAR, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
-        this.insulin = insulin;
+        this.insulinName = insulin.getName();
         this.amount = amount;
     }
     
@@ -37,5 +37,21 @@ public class TimedInsulin {
             return false;
         
         return this.shouldAt.get(Calendar.DAY_OF_YEAR) == this.tookAt.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public Calendar getTookAt() {
+        return tookAt;
+    }
+
+    public Calendar getShouldAt() {
+        return shouldAt;
+    }
+
+    public String getInsulinName() {
+        return insulinName;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }

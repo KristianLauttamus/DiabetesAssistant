@@ -3,6 +3,7 @@ package com.lauttadev.diabetesassistant.gui;
 import com.lauttadev.diabetesassistant.repositories.Database;
 import com.lauttadev.diabetesassistant.models.BloodSugar;
 import com.lauttadev.diabetesassistant.models.Insulin;
+import com.lauttadev.diabetesassistant.models.TimedInsulin;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -10,20 +11,22 @@ import javax.swing.event.ChangeListener;
 public class MainFrame extends javax.swing.JFrame {
     private final Database<BloodSugar> bloodSugarDatabase;
     private final Database<Insulin> insulinDatabase;
+    private final Database<TimedInsulin> timedInsulinDatabase;
     
     /**
      * Creates new form MainFrame
      * @param bloodSugarDatabase
      * @param insulinDatabase
      */
-    public MainFrame(Database<BloodSugar> bloodSugarDatabase, Database<Insulin> insulinDatabase) {
+    public MainFrame(Database<BloodSugar> bloodSugarDatabase, Database<Insulin> insulinDatabase, Database<TimedInsulin> timedInsulinDatabase) {
         this.bloodSugarDatabase = bloodSugarDatabase;
         this.insulinDatabase = insulinDatabase;
+        this.timedInsulinDatabase = timedInsulinDatabase;
         
         initComponents();
         
         this.tabs.add("Verensokerit ja muistutukset", new BloodSugarsTab(bloodSugarDatabase, insulinDatabase));
-        this.tabs.add("Insuliinit", new InsulinsTab(insulinDatabase));
+        this.tabs.add("Insuliinit", new InsulinsTab(insulinDatabase, timedInsulinDatabase));
         
         // Add listener to tabs
         final MainFrame frame = this;

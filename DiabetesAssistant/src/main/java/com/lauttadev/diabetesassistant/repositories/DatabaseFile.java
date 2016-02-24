@@ -38,11 +38,11 @@ public enum DatabaseFile {
         }
         
         if(this.equals(DatabaseFile.BLOODSUGARS) || this.equals(DatabaseFile.BLOODSUGARS_TEST)){
-            filePath += "\\bloodSugarsGSON.json";
+            filePath += "/bloodSugarsGSON.json";
         } else if(this.equals(DatabaseFile.INSULINS) || this.equals(DatabaseFile.INSULINS_TEST)){
-            filePath += "\\insulinsGSON.json";
+            filePath += "/insulinsGSON.json";
         } else if(this.equals(DatabaseFile.TIMEDINSULINS) || this.equals(DatabaseFile.TIMEDINSULINS_TEST)){
-            filePath += "\\timedInsulinsGSON.json";
+            filePath += "/timedInsulinsGSON.json";
         }
         
         return filePath;
