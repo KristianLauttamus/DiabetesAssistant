@@ -118,6 +118,11 @@ public final class BloodSugarsTab extends javax.swing.JPanel {
                 formFocusGained(evt);
             }
         });
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         add_bloodsugar.setBackground(new java.awt.Color(240, 240, 220));
         add_bloodsugar.setText("Lisää verensokeri");
@@ -252,7 +257,7 @@ public final class BloodSugarsTab extends javax.swing.JPanel {
     }
     
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-        
+        this.updateInsulinsComboBox();
     }//GEN-LAST:event_formFocusGained
 
     private void bloodsugarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bloodsugarKeyTyped
@@ -264,6 +269,10 @@ public final class BloodSugarsTab extends javax.swing.JPanel {
             this.add_bloodsugar.setEnabled(false);
         }
     }//GEN-LAST:event_bloodsugarKeyTyped
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        this.updateInsulinsComboBox();
+    }//GEN-LAST:event_formComponentShown
     
     /**
      * Add BloodSugar to database and to the list

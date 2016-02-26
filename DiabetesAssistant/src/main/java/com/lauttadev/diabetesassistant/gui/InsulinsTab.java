@@ -49,6 +49,10 @@ public class InsulinsTab extends javax.swing.JPanel {
         this.insulins_list.setLayout(new GridBagLayout());
         this.timedinsulins_list.setLayout(new GridBagLayout());
         
+        // Make insulin combobox empty if no insulins found
+        if(this.insulinDatabase.all().isEmpty())
+            this.insulins_combo_box.setModel(new DefaultComboBoxModel(){});
+        
         this.updateInsulinsList();
         this.updateTimedInsulinsList();
     }
@@ -362,6 +366,7 @@ public class InsulinsTab extends javax.swing.JPanel {
         
         // Remove -Button
         final JButton btnRemove = new JButton("Poista");
+        final InsulinsTab panel = this;
         btnRemove.addActionListener(new ActionListener()
         {
             @Override
@@ -371,6 +376,7 @@ public class InsulinsTab extends javax.swing.JPanel {
                 insulins_list.remove(btnRemove.getParent());
                 insulins_list.revalidate();
                 insulins_list.repaint();
+                panel.updateInsulinsComboBox();
             }
         });
         paneeli.add(btnRemove);
@@ -384,6 +390,10 @@ public class InsulinsTab extends javax.swing.JPanel {
         }
         
         // Update combobox
+        this.updateInsulinsComboBox();
+    }
+    
+    private void updateInsulinsComboBox(){
         this.insulins_combo_box.setModel(new DefaultComboBoxModel(insulinDatabase.all().toArray()));
         this.insulins_combo_box.revalidate();
         this.insulins_combo_box.repaint();
@@ -447,7 +457,7 @@ public class InsulinsTab extends javax.swing.JPanel {
         
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
         JPanel paneeli = new JPanel();
-        paneeli.add(new JLabel(timedInsulin.getInsulinName() + " " + timedInsulin.getAmount()) + " - " + (timedInsulin.getShouldAt().get(Calendar.HOUR));
+        paneeli.add(new JLabel(timedInsulin.getInsulinName() + " " + timedInsulin.getAmount() + " - " + (timedInsulin.getShouldAt().get(Calendar.HOUR))));
         
         // Remove -Buttond
         final JButton btnRemove = new JButton("Poista");
