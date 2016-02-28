@@ -435,7 +435,7 @@ public class InsulinsTab extends javax.swing.JPanel {
             cal.set(Calendar.HOUR, Integer.valueOf(this.add_timedinsulin_hour.getText().split(":")[0]));
             cal.set(Calendar.MINUTE, Integer.valueOf(this.add_timedinsulin_hour.getText().split(":")[1]));
             System.out.println("2");
-            TimedInsulin timedInsulin = new TimedInsulin(cal, this.insulinDatabase.all().get(this.insulins_combo_box.getSelectedIndex()), Integer.valueOf(this.add_timedinsulin_amount.getText()));
+            TimedInsulin timedInsulin = new TimedInsulin(cal, this.insulinDatabase.all().get(this.insulins_combo_box.getSelectedIndex()), Double.valueOf(this.add_timedinsulin_amount.getText()));
             this.timedInsulinDatabase.add(timedInsulin);
             System.out.println("3");
             addTimedInsulinToList(timedInsulin, true);

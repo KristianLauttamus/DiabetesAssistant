@@ -9,10 +9,26 @@ public class Insulin {
         this.perCarbohydrate = perCarbohydrate;
     }
     
+    /**
+     * Calculate the amount of insulin that should be taken, only by carbs
+     * @param carbohydrates
+     * @return 
+     */
     public int calculateAmount(int carbohydrates){
         return new Double(this.perCarbohydrate * carbohydrates).intValue();
     }
+    
+    /**
+     * Calculate the amount of insulin that should be taken
+     * @param carbohydrates
+     * @param bloodSugar
+     * @return int
+     */
     public int calculateAmount(int carbohydrates, BloodSugar bloodSugar){
+        if(carbohydrates == 0){
+            carbohydrates = 1;
+        }
+        
         if(bloodSugar.getTextValue() == null || bloodSugar.getTextValue().isEmpty()){
             return new Double(bloodSugar.getValue()/10).intValue() +
                     new Double(this.perCarbohydrate * carbohydrates).intValue();

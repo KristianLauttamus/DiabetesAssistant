@@ -14,7 +14,7 @@ public class TimedInsulin {
     private final String insulinName;
     private final double amount;
     
-    public TimedInsulin(Calendar shouldAt, Insulin insulin, int amount){
+    public TimedInsulin(Calendar shouldAt, Insulin insulin, double amount){
         this.shouldAt = shouldAt;
         this.shouldAt.set(Calendar.DAY_OF_YEAR, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
         this.insulinName = insulin.getName();
