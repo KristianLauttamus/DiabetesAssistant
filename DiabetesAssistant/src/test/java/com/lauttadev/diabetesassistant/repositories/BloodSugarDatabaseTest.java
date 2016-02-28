@@ -16,6 +16,21 @@ public class BloodSugarDatabaseTest {
     }
     
     @Test
+    public void all_directly_from_file(){
+        BloodSugar bsHI = new BloodSugar("HI");
+        BloodSugar bsLO = new BloodSugar("LO");
+        BloodSugar bs = new BloodSugar(12.5);
+        
+        this.db.add(bs);
+        this.db.add(bsLO);
+        this.db.add(bsHI);
+        
+        ArrayList<BloodSugar> bloodsugars = this.db.allFromFile();
+        
+        assertEquals(bloodsugars.size(), 3);
+    }
+    
+    @Test
     public void saving_bloodsugar_types(){
         BloodSugar bsHI = new BloodSugar("HI");
         BloodSugar bsLO = new BloodSugar("LO");

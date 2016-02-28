@@ -49,4 +49,13 @@ public class BloodSugarTest {
         bs.setInsulinName(new Insulin("Testi", 10));
         assertEquals(bs.getInsulinName(), "Testi");
     }
+    
+    @Test
+    public void test_insulin_taken(){
+        BloodSugar bloodSugar = new BloodSugar("asd", new Insulin("NovorapidNothing", 10), 10, false);
+        
+        bloodSugar.takeInsulin();
+        
+        assertEquals(true, bloodSugar.isInsulinTaken());
+    }
 }

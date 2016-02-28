@@ -24,21 +24,28 @@ public class Insulin {
      * @param bloodSugar
      * @return int
      */
-    public int calculateAmount(int carbohydrates, BloodSugar bloodSugar){
-        if(carbohydrates == 0){
-            carbohydrates = 1;
+    public int calculateAmount(int carbohydrates, BloodSugar bloodSugar){        
+        double bs = bloodSugar.getValue();
+        
+        if(bloodSugar.getTextValue() != null){
+            switch (bloodSugar.getTextValue()) {
+                case "HI":
+                    bs = 44;
+                    break;
+                case "LO":
+                    return 0;
+            }
         }
         
-        if(bloodSugar.getTextValue() == null || bloodSugar.getTextValue().isEmpty()){
-            return new Double(bloodSugar.getValue()/10).intValue() +
-                    new Double(this.perCarbohydrate * carbohydrates).intValue();
-        } else if (bloodSugar.getBloodSugar().equals("HI")){
-            return 20 + new Double(this.perCarbohydrate * carbohydrates).intValue();
-        } else if (bloodSugar.getBloodSugar().equals("LO")){
+        double insulin = (bs*5)+carbohydrates;
+        
+        int r = (int)insulin - (4*5);
+        
+        if(r < 4*5){
             return 0;
-        } else {
-            return new Double(this.perCarbohydrate * carbohydrates).intValue();
         }
+        
+        return new Double(r * this.perCarbohydrate).intValue();
     }
     
     /**

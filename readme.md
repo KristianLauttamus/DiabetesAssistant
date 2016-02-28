@@ -2,7 +2,7 @@
 
 - [aiheenKuvausJaRakenne.md](dokumentointi/aiheenKuvausJaRakenne.md)
 - testausdokumentti.md
-- käyttöohjeet.md
+- [käyttöohjeet.md](dokumentointi/kayttoohjeet.md)
 - [tuntikirjanpito.md](dokumentointi/tuntikirjanpito.md)
 
 ## Linkit

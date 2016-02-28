@@ -22,6 +22,7 @@ public class BloodSugar {
                 this.value = Double.valueOf(text_value);
             } catch(Exception e) {
                 System.out.println(e.getMessage());
+                this.value = 4;
             }
         } else {
             this.textValue = text_value;
@@ -46,6 +47,7 @@ public class BloodSugar {
                 this.value = Double.valueOf(text_value);
             } catch(Exception e) {
                 System.out.println(e.getMessage());
+                this.value = 4;
             }
         } else {
             this.textValue = text_value;

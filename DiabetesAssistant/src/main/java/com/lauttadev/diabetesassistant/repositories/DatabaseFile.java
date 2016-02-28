@@ -75,7 +75,7 @@ public enum DatabaseFile {
      * Check if File exists
      * @return boolean
      */
-    private boolean fileExists(){
+    public boolean fileExists(){
         if(file == null){
             return false;
         }

@@ -109,4 +109,11 @@ public final class Database<E> {
             System.out.println(ex.getMessage());
         }
     }
+    
+    /**
+     * Empty array
+     */
+    public void empty(){
+        this.data = new ArrayList<>();
+    }
 }
