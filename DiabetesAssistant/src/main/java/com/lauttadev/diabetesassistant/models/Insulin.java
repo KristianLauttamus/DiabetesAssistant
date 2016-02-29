@@ -1,34 +1,38 @@
 package com.lauttadev.diabetesassistant.models;
 
+/**
+ * Class for the Insulin, includes name and per carbohydrates -value
+ * @author kristian
+ */
 public class Insulin {
     private double perCarbohydrate;
     private String name;
     
-    public Insulin(String name, double perCarbohydrate){
+    public Insulin(String name, double perCarbohydrate) {
         this.name = name;
         this.perCarbohydrate = perCarbohydrate;
     }
     
     /**
-     * Calculate the amount of insulin that should be taken, only by carbs
+     * Calculate the amount of insulin that should be taken, only by carbohydrates.
      * @param carbohydrates
      * @return 
      */
-    public int calculateAmount(int carbohydrates){
+    public int calculateAmount(int carbohydrates) {
         return new Double(this.perCarbohydrate * carbohydrates).intValue();
     }
     
     /**
-     * Calculate the amount of insulin that should be taken
+     * Calculate the amount of insulin that should be taken.
      * @param carbohydrates
      * @param bloodSugar
-     * @return int
+     * @return calculated amount of insulin to be taken for this record
      */
-    public int calculateAmount(int carbohydrates, BloodSugar bloodSugar){        
+    public int calculateAmount(int carbohydrates, BloodSugar bloodSugar) {        
         double bs = bloodSugar.getValue();
         
-        if(bloodSugar.getTextValue() != null){
-            switch (bloodSugar.getTextValue()) {
+        if(bloodSugar.getTextValue() != null) { 
+            switch (bloodSugar.getTextValue()) { 
                 case "HI":
                     bs = 44;
                     break;
@@ -41,7 +45,7 @@ public class Insulin {
         
         int r = (int)insulin - (4*5);
         
-        if(r < 4*5){
+        if(r < 4*5) { 
             return 0;
         }
         

@@ -3,6 +3,10 @@ package com.lauttadev.diabetesassistant.models;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class for the BloodSugar values and timings
+ * @author kristian
+ */
 public class BloodSugar {
     private double value;
     private String textValue = null;
